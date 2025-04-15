@@ -3,7 +3,7 @@ body{
 }
 
 canvas{
-    background-color: white;
+    background-color: rgb(32, 30, 37);
     image-rendering: pixelated;
 }
 

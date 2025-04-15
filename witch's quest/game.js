@@ -1,35 +1,37 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext('2d');
 
+/////PLAYER OVERWORLD
 
-//overworld
-
-////player
-
-let witch = {
-    x: 0,
-    y: 100,
-    raio: 50,
+let player = {
+    x: 375,
+    y: 250,
+    size: 50,
     img: new Image(),
     desenha: function(){
-        this.img.src = 'witch_front1';
+        this.img.src = 'player_front.gif';
         ctx.beginPath();
-        ctx.drawImage(this.img, this.x, this.y, 2*this.raio, 2*this.raio);
+        ctx.drawImage(this.img, this.x, this.y, 3*this.size, 3*this.size);
         ctx.closePath();
     }
 }
 
+function animacao(){
+    ctx.clearRect(0,0,900,900);
+    player.desenha();
+    requestAnimationFrame(animacao);
+}
 
-
+animacao()
 
 document.addEventListener('keydown', function(evento){
     let tecla = evento.key;
     console.log(tecla);
 
-    let velocidade = 3;
-    if(tecla == 'ArrowUp'){ witch.y -= velocidade}
-    if(tecla == 'ArrowDown'){ witch.y += velocidade}
-    if(tecla == 'ArrowLeft'){ witch.x -= velocidade}
-    if(tecla == 'ArrowRight'){ witch.x += velocidade}
-    
+    let velocidade = 4;
+    if(tecla == 'ArrowUp'){ player.y -= velocidade}
+    if(tecla == 'ArrowDown'){ player.y += velocidade}
+    if(tecla == 'ArrowLeft'){ player.x -= velocidade}
+    if(tecla == 'ArrowRight'){ player.x += velocidade}
 })
+
