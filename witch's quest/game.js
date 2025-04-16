@@ -1,6 +1,8 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext('2d');
 
+/////BACKGOUND
+
 /////PLAYER OVERWORLD
 
 let player = {
@@ -29,9 +31,18 @@ document.addEventListener('keydown', function(evento){
     console.log(tecla);
 
     let velocidade = 4;
-    if(tecla == 'ArrowUp'){ player.y -= velocidade}
-    if(tecla == 'ArrowDown'){ player.y += velocidade}
-    if(tecla == 'ArrowLeft'){ player.x -= velocidade}
-    if(tecla == 'ArrowRight'){ player.x += velocidade}
+    if(tecla == 'ArrowUp'){
+        player.y -= velocidade;
+        player.img.src = 'witch_back1.png'
+    }
+    if(tecla == 'ArrowDown'){
+        player.y += velocidade
+    }
+    if(tecla == 'ArrowLeft'){
+        player.x -= velocidade
+    }
+    if(tecla == 'ArrowRight'){ 
+        player.x += velocidade}
 })
 
+//////BATTLE
