@@ -92,4 +92,28 @@ document.addEventListener('keydown', function(evento){
     }
 })
 
-//////BATTLE
+//////PLAYER STATS
+
+level = 1
+exp = 0
+player_maxhp = 20
+player_currenthp = player_maxhp
+player_maxmp = 30
+player_currentmp = player_maxmp
+player_attack = 6
+player_defense = 5
+player_magic = 12
+player_speed = 10
+
+//////ENEMY STATS
+
+class enemy {
+    constructor(enemy_name, enemy_maxhp, enemy_attack, enemy_defense, enemy_speed, enemy_xp){
+        this.enemy_name = enemy_name
+        this.enemy_maxhp = enemy_maxhp
+        this.enemy_attack = enemy_attack
+        this.enemy_defense = enemy_defense
+        this.enemy_speed = enemy_speed
+        this.enemy_xp = enemy_xp
+    }
+}
