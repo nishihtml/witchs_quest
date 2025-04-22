@@ -8,7 +8,7 @@ let player = {
     sy: 1,
     x: 375,
     y: 250,
-    size: 50,
+    size: 40,
     img: new Image(),
     desenha: function(){
         this.img.src = "player_spritesheet.png";
