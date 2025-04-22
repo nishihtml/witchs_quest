@@ -40,25 +40,26 @@ document.addEventListener('keydown', function(evento){
         player.sx = player.sx;
         player.sy = 0;
         frame += 1;
-        if(frame == if_frame && player.sx == 0){
+        if(frame >= if_frame && player.sx == 0){
             player.sx = 1;
             frame = 0;
         }
-        if(frame == if_frame && player.sx == 1){
+        if(frame >= if_frame && player.sx == 1){
             player.sx = 0;
             frame = 0;
         }
     }
     if(tecla == 'ArrowDown'){
+        if(tecla == 'ArrowDown')
         player.y += velocidade;
         player.sx = player.sx;
         player.sy = 1;
         frame += 1;
-        if(frame == if_frame && player.sx == 0){
+        if(frame >= if_frame && player.sx == 0){
             player.sx = 1;
             frame = 0;
         }
-        if(frame == if_frame && player.sx == 1){
+        if(frame >= if_frame && player.sx == 1){
             player.sx = 0;
             frame = 0;
         }
@@ -68,11 +69,11 @@ document.addEventListener('keydown', function(evento){
         player.sx = player.sx;
         player.sy = 2;
         frame += 1;
-        if(frame == if_frame && player.sx == 0){
+        if(frame >= if_frame && player.sx == 0){
             player.sx = 1;
             frame = 0;
         }
-        if(frame == if_frame && player.sx == 1){
+        if(frame >= if_frame && player.sx == 1){
             player.sx = 0;
             frame = 0;
         }
@@ -80,17 +81,20 @@ document.addEventListener('keydown', function(evento){
     if(tecla == 'ArrowRight'){ 
         player.x += velocidade;
         player.sx = player.sx;
-        player.sy = 3;frame += 1;
-        if(frame == if_frame && player.sx == 0){
+        player.sy = 3;
+        frame += 1;
+        if(frame >= if_frame && player.sx == 0){
             player.sx = 1;
             frame = 0;
         }
-        if(frame == if_frame && player.sx == 1){
+        if(frame >= if_frame && player.sx == 1){
             player.sx = 0;
             frame = 0;
         }
     }
 })
+
+
 
 //////PLAYER STATS
 
@@ -108,12 +112,12 @@ player_speed = 10
 //////ENEMY STATS
 
 class enemy {
-    constructor(enemy_name, enemy_maxhp, enemy_attack, enemy_defense, enemy_speed, enemy_xp){
+    constructor(enemy_name, enemy_maxhp, enemy_attack, enemy_defense, enemy_speed, enemy_exp){
         this.enemy_name = enemy_name
         this.enemy_maxhp = enemy_maxhp
         this.enemy_attack = enemy_attack
         this.enemy_defense = enemy_defense
         this.enemy_speed = enemy_speed
-        this.enemy_xp = enemy_xp
+        this.enemy_exp = enemy_exp
     }
 }
