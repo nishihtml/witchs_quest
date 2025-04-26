@@ -8,12 +8,12 @@ let player = {
     sy: 1,
     x: 375,
     y: 250,
-    size: 40,
+    size: 128,
     img: new Image(),
     desenha: function(){
         this.img.src = "player_spritesheet.png";
         ctx.beginPath();
-        ctx.drawImage(this.img, 0 + (256*this.sx), 0 + (256*this.sy), 256, 256,  this.x, this.y, 3*this.size, 3*this.size);
+        ctx.drawImage(this.img, 0 + (256*this.sx), 0 + (256*this.sy), 256, 256,  this.x, this.y, this.size, this.size);
           ctx.closePath();
     }
 }
@@ -26,6 +26,8 @@ function animacao(){
 
 animacao()
 
+battle = false
+menu = false
 frame = 0
 if_frame = 10
 player.sx = 0
@@ -91,9 +93,14 @@ document.addEventListener('keydown', function(evento){
             player.sx = 0;
             frame = 0;
         }
+        //////DEBUG
+        if(tecla == 'D'){
+            battle = true
+        }
+        if(tecla == 'X')
+            menu = true
     }
 })
-
 
 
 //////PLAYER STATS
@@ -112,7 +119,8 @@ player_speed = 10
 //////ENEMY STATS
 
 class enemy {
-    constructor(enemy_name, enemy_maxhp, enemy_attack, enemy_defense, enemy_speed, enemy_exp){
+    constructor(enemy_id, enemy_name, enemy_maxhp, enemy_attack, enemy_defense, enemy_speed, enemy_exp){
+        this.enemy_id = enemy_id
         this.enemy_name = enemy_name
         this.enemy_maxhp = enemy_maxhp
         this.enemy_attack = enemy_attack
@@ -120,4 +128,9 @@ class enemy {
         this.enemy_speed = enemy_speed
         this.enemy_exp = enemy_exp
     }
+}
+
+
+//////BATTLE
+if(battle == true){
 }
