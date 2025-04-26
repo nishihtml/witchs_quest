@@ -14,9 +14,22 @@ let player = {
         this.img.src = "player_spritesheet.png";
         ctx.beginPath();
         ctx.drawImage(this.img, 0 + (256*this.sx), 0 + (256*this.sy), 256, 256,  this.x, this.y, this.size, this.size);
-          ctx.closePath();
+        ctx.closePath();
     }
 }
+
+let imagem_menu = {
+    local: 0,
+    size: 800,
+    img: new Image(),
+    desenha2: function(){
+        this.img.src = 'menu.png';
+        ctx.beginPath();
+        ctx.drawImage(this.img, 0, 0, 800, 800, this.local, this.local, this.size, this.size);
+        ctx.closePath();
+    }
+}
+
 
 function animacao(){
     ctx.clearRect(0,0,900,900);
@@ -26,8 +39,8 @@ function animacao(){
 
 animacao()
 
-battle = false
-menu = false
+battle = 0
+menu = 0
 frame = 0
 if_frame = 10
 player.sx = 0
@@ -52,7 +65,6 @@ document.addEventListener('keydown', function(evento){
         }
     }
     if(tecla == 'ArrowDown'){
-        if(tecla == 'ArrowDown')
         player.y += velocidade;
         player.sx = player.sx;
         player.sy = 1;
@@ -93,14 +105,15 @@ document.addEventListener('keydown', function(evento){
             player.sx = 0;
             frame = 0;
         }
-        //DEBUG
-        if(tecla == 'KeyD'){
-            battle = true
-        }
-        //
-        if(tecla == 'KeyC')
-            menu = true
     }
+        //DEBUG
+    if(tecla == 'KeyD'){
+        battle = 1
+    }
+        //
+    if(tecla == 'KeyC'){
+        menu = 1
+    }   
 })
 
 
@@ -132,6 +145,8 @@ class enemy {
 }
 
 
-//////BATTLE
-if(battle == true){
+//////
+
+if(menu == 1){
+    imagem_menu.desenha2()
 }
