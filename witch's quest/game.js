@@ -93,11 +93,12 @@ document.addEventListener('keydown', function(evento){
             player.sx = 0;
             frame = 0;
         }
-        //////DEBUG
-        if(tecla == 'D'){
+        //DEBUG
+        if(tecla == 'KeyD'){
             battle = true
         }
-        if(tecla == 'X')
+        //
+        if(tecla == 'KeyC')
             menu = true
     }
 })
@@ -108,7 +109,7 @@ document.addEventListener('keydown', function(evento){
 level = 1
 exp = 0
 player_maxhp = 20
-player_currenthp = player_maxhp
+player_currenthp = player_maxhp 
 player_maxmp = 30
 player_currentmp = player_maxmp
 player_attack = 6
