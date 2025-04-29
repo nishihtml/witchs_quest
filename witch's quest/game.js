@@ -111,7 +111,7 @@ document.addEventListener('keydown', function(evento){
         battle = 1
     }
         //
-    if(tecla == 'KeyC'){
+    if(67 in tecla){
         menu = 1
     }   
 })
