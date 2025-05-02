@@ -7,20 +7,20 @@ let player = {
     sx: 0,
     sy: 0,
     x: 100,
-    y: 600,
+    y: 675,
     size: 150,
     img: new Image(),
     desenha: function(){
         this.img.src = "witch_spritesheet.png";
         ctx.beginPath();
-        ctx.drawImage(this.img, 0 + (150*this.sx), 0 + (150*this.sy), 150, 150,  this.x, this.y, this.size, this.size);
+        ctx.drawImage(this.img, 0 + (this.size*this.sx), 0 + (this.size*this.sy), this.size, this.size,  this.x, this.y, this.size, this.size);
         ctx.closePath();
     }
 }
 
 
 function animacao(){
-    ctx.clearRect(0,0,1200,800);
+    ctx.clearRect(0,0,900,900);
     player.desenha();
     requestAnimationFrame(animacao);
 }
@@ -108,6 +108,11 @@ document.addEventListener('keyup', function(evento){
     }
 })
 
-const map = [
-
-]
+/*const map1 = [
+    '000000000000000'
+    '000000000000000'
+    '000000000000000'
+    '000000000000000'
+    '000000000000000'
+    '000000000000000'
+]*/
