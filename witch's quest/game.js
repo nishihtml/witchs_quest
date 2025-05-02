@@ -8,12 +8,12 @@ let player = {
     sy: 0,
     x: 100,
     y: 600,
-    size: 100,
+    size: 150,
     img: new Image(),
     desenha: function(){
         this.img.src = "witch_spritesheet.png";
         ctx.beginPath();
-        ctx.drawImage(this.img, 0 + (100*this.sx), 0 + (100*this.sy), 100, 100,  this.x, this.y, this.size, this.size);
+        ctx.drawImage(this.img, 0 + (150*this.sx), 0 + (150*this.sy), 150, 150,  this.x, this.y, this.size, this.size);
         ctx.closePath();
     }
 }
@@ -50,6 +50,7 @@ document.addEventListener('keydown', function(evento){
 
     if(tecla == 'ArrowRight'){
         andar_direita = true
+        andar_esquerda = false
     }
     if(andar_direita == true){ 
         player.x += velocidade;
@@ -68,6 +69,7 @@ document.addEventListener('keydown', function(evento){
 
     if(tecla == 'ArrowLeft'){
         andar_esquerda = true
+        andar_direita = false
     }
     if(andar_esquerda == true){
         player.x -= velocidade;
@@ -105,3 +107,7 @@ document.addEventListener('keyup', function(evento){
         if_frame = 10
     }
 })
+
+const map = [
+
+]
