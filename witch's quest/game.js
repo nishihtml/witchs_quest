@@ -20,10 +20,10 @@ let player = {
 // se sy = 0, o personagem esta virado para direita
 // se sy = 1, o personagem esta virado para esquerda
 
-velocidade = 6
+velocidade = 3
 limite_pulo = 0
 frame = 0
-if_frame = 10
+if_frame = 12
 player.sx = 1
 andar_direita = false
 andar_esquerda = false
@@ -38,8 +38,8 @@ document.addEventListener('keydown', function(evento){
         correr = true
     }
     if(correr == true){
-        velocidade = 12
-        if_frame = 5
+        velocidade = 6
+        if_frame = 8
     }
 
     if(tecla == 'ArrowRight'){
@@ -75,8 +75,8 @@ document.addEventListener('keyup', function(evento){
 
     if(tecla_solta == 'Shift'){
         correr = false
-        velocidade = 6
-        if_frame = 10
+        velocidade = 3
+        if_frame = 12
     }
 })
 
@@ -84,15 +84,9 @@ function animacao(){
     ctx.clearRect(0,0,1200,1200);
     player.desenha();
     if(pular == true){
-        player.sx = 3
-        player.y -= velocidade
-        limite_pulo += velocidade
-        if(andar_direita == true){
-            player.x += velocidade * 0.5
-        }
-        if(andar_esquerda == true){
-            player.x -= velocidade * 0.5
-        }
+        player.sx = 3;
+        player.y -= velocidade * 2 ;
+        limite_pulo += velocidade * 2;
         if(limite_pulo >= 120){
             pular = false
             limite_pulo = 0
