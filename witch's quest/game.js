@@ -17,6 +17,9 @@ let player = {
     }
 }
 
+// se sy = 0, o personagem esta virado para direita
+// se sy = 1, o personagem esta virado para esquerda
+
 velocidade = 6
 limite_pulo = 0
 frame = 0
@@ -43,39 +46,13 @@ document.addEventListener('keydown', function(evento){
         andar_direita = true
         andar_esquerda = false
     }
-    if(andar_direita == true){ 
-        player.x += velocidade;
-        player.sx = player.sx;
-        player.sy = 0;
-        frame += 1;
-        if(frame >= if_frame && player.sx == 2){
-            player.sx = 1;
-            frame = 0;
-        }
-        if(frame >= if_frame && player.sx == 1){
-            player.sx = 2;
-            frame = 0;
-        }
-    }
+    
 
     if(tecla == 'ArrowLeft'){
         andar_esquerda = true
         andar_direita = false
     }
-    if(andar_esquerda == true){
-        player.x -= velocidade;
-        player.sx = player.sx;
-        player.sy = 1;
-        frame += 1;
-        if(frame >= if_frame && player.sx == 2){
-            player.sx = 1;
-            frame = 0;
-        }
-        if(frame >= if_frame && player.sx == 1){
-            player.sx = 2;
-            frame = 0;
-        }
-    }
+    
     
     if(tecla == 'ArrowUp' && pular == false){
         pular = true
@@ -107,6 +84,7 @@ function animacao(){
     ctx.clearRect(0,0,1200,1200);
     player.desenha();
     if(pular == true){
+        player.sx = 3
         player.y -= velocidade
         limite_pulo += velocidade
         if(andar_direita == true){
@@ -118,6 +96,35 @@ function animacao(){
         if(limite_pulo >= 120){
             pular = false
             limite_pulo = 0
+            player.sx = 1
+        }
+    }
+    if(andar_direita == true){ 
+        player.x += velocidade;
+        player.sx = player.sx;
+        player.sy = 0;
+        frame += 1;
+        if(frame >= if_frame && player.sx == 2){
+            player.sx = 1;
+            frame = 0;
+        }
+        if(frame >= if_frame && player.sx == 1){
+            player.sx = 2;
+            frame = 0;
+        }
+    }
+    if(andar_esquerda == true){
+        player.x -= velocidade;
+        player.sx = player.sx;
+        player.sy = 1;
+        frame += 1;
+        if(frame >= if_frame && player.sx == 2){
+            player.sx = 1;
+            frame = 0;
+        }
+        if(frame >= if_frame && player.sx == 1){
+            player.sx = 2;
+            frame = 0;
         }
     }
     requestAnimationFrame(animacao);
