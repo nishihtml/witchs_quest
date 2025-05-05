@@ -6,7 +6,7 @@ let player = {
     sx: 0,
     sy: 0,
     x: 100,
-    y: 650,
+    y: 600,
     size: 150,
     img: new Image(),
     desenha: function(){
@@ -21,6 +21,7 @@ let player = {
 // se sy = 1, o personagem esta virado para esquerda
 
 velocidade = 3
+velocidade_pulo = 5
 limite_pulo = 0
 frame = 0
 if_frame = 12
@@ -29,6 +30,10 @@ andar_direita = false
 andar_esquerda = false
 correr = false
 pular = false
+cair = false
+onground = true
+ataque = false
+dano_player = false
 
 document.addEventListener('keydown', function(evento){
     let tecla = evento.key;
@@ -46,14 +51,10 @@ document.addEventListener('keydown', function(evento){
         andar_direita = true
         andar_esquerda = false
     }
-    
-
     if(tecla == 'ArrowLeft'){
         andar_esquerda = true
         andar_direita = false
     }
-    
-    
     if(tecla == 'ArrowUp' && pular == false){
         pular = true
     }
@@ -81,16 +82,20 @@ document.addEventListener('keyup', function(evento){
 })
 
 function animacao(){    
-    ctx.clearRect(0,0,1200,1200);
+    ctx.clearRect(0,0,1600,800);
+
     player.desenha();
+
     if(pular == true){
+        onground = false
         player.sx = 3;
-        player.y -= velocidade * 2 ;
-        limite_pulo += velocidade * 2;
+        player.y -= velocidade_pulo;
+        limite_pulo += velocidade_pulo;
         if(limite_pulo >= 120){
             pular = false
             limite_pulo = 0
             player.sx = 1
+            cair = true
         }
     }
     if(andar_direita == true){ 
