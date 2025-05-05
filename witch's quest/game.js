@@ -2,13 +2,11 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext('2d');
 
-//////Player
-
 let player = {
     sx: 0,
     sy: 0,
     x: 100,
-    y: 750,
+    y: 650,
     size: 150,
     img: new Image(),
     desenha: function(){
@@ -19,26 +17,19 @@ let player = {
     }
 }
 
-function animacao(){
-    ctx.clearRect(0,0,1200,1200);
-    player.desenha();
-    requestAnimationFrame(animacao);
-}
-
-animacao()
-
+velocidade = 6
+limite_pulo = 0
 frame = 0
 if_frame = 10
 player.sx = 1
 andar_direita = false
 andar_esquerda = false
 correr = false
+pular = false
 
 document.addEventListener('keydown', function(evento){
     let tecla = evento.key;
     console.log(tecla);
-
-    let velocidade = 6;
 
     if(tecla == 'Shift'){ 
         correr = true
@@ -85,6 +76,10 @@ document.addEventListener('keydown', function(evento){
             frame = 0;
         }
     }
+    
+    if(tecla == 'ArrowUp' && pular == false){
+        pular = true
+    }
 })
 
 document.addEventListener('keyup', function(evento){
@@ -108,25 +103,24 @@ document.addEventListener('keyup', function(evento){
     }
 })
 
-/*
-[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]*/
+function animacao(){    
+    ctx.clearRect(0,0,1200,1200);
+    player.desenha();
+    if(pular == true){
+        player.y -= velocidade
+        limite_pulo += velocidade
+        if(andar_direita == true){
+            player.x += velocidade * 0.5
+        }
+        if(andar_esquerda == true){
+            player.x -= velocidade * 0.5
+        }
+        if(limite_pulo >= 120){
+            pular = false
+            limite_pulo = 0
+        }
+    }
+    requestAnimationFrame(animacao);
+}
+
+animacao()
