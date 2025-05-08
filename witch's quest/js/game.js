@@ -7,7 +7,7 @@ let map_test = {
     tamanho: 800,
     img: new Image(),
     desenha: function(){
-        this.img.src = 'map_test.png';
+        this.img.src = '../dataset/map_test.png';
         ctx.beginPath();
         ctx.drawImage(this.img, this.x, this.y, this.tamanho*2, this.tamanho);
         ctx.closePath();
@@ -22,7 +22,7 @@ let player = {
     size: 150,
     img: new Image(),
     desenha: function(){
-        this.img.src = "witch_spritesheet.png";
+        this.img.src = "../dataset/witch_spritesheet.png";
         ctx.beginPath();
         ctx.drawImage(this.img, this.size * this.sx, this.size * this.sy, this.size, this.size, this.x, this.y, this.size, this.size);
         ctx.closePath();
