@@ -1,6 +1,18 @@
-
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext('2d');
+
+let map_test = {
+    x: 0,
+    y: 0,
+    tamanho: 800,
+    img: new Image(),
+    desenha: function(){
+        this.img.src = 'map_test.png';
+        ctx.beginPath();
+        ctx.drawImage(this.img, this.x, this.y, this.tamanho*2, this.tamanho);
+        ctx.closePath();
+    }
+}
 
 let player = {
     sx: 0,
@@ -20,11 +32,11 @@ let player = {
 // se sy = 0, o personagem esta virado para direita
 // se sy = 1, o personagem esta virado para esquerda
 
-velocidade = 3
-velocidade_pulo = 5
-limite_pulo = 0
-frame = 0
-if_frame = 12
+velocidade = 2 //velocidade do player
+velocidade_pulo = 4 //velocidade do pulo do player
+limite_pulo = 0 //limite até onde o player pula. se o limite_pulo >= 120, o player para de movimentar para cima
+frame = 0 //frame de animação do player
+if_frame = 24//condição para mudar a imagem do jogador
 player.sx = 1
 andar_direita = false
 andar_esquerda = false
@@ -43,8 +55,8 @@ document.addEventListener('keydown', function(evento){
         correr = true
     }
     if(correr == true){
-        velocidade = 6
-        if_frame = 8
+        velocidade = 4
+        if_frame = 12
     }
 
     if(tecla == 'ArrowRight'){
@@ -76,8 +88,8 @@ document.addEventListener('keyup', function(evento){
 
     if(tecla_solta == 'Shift'){
         correr = false
-        velocidade = 3
-        if_frame = 12
+        velocidade = 2
+        if_frame = 24
     }
 })
 
