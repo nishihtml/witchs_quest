@@ -18,7 +18,7 @@ let player = {
     sx: 0,
     sy: 0,
     x: 100,
-    y: 550,
+    y: 600,
     size: 150,
     img: new Image(),
     desenha: function(){
