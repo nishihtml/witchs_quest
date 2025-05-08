@@ -18,7 +18,7 @@ let player = {
     sx: 0,
     sy: 0,
     x: 100,
-    y: 550,
+    y: 700,
     size: 150,
     img: new Image(),
     desenha: function(){
@@ -29,18 +29,19 @@ let player = {
     }
 }
 
-let player_hitbox = {
-    esquerda: player.x + 50,
-    direita: player.x + player.size - 50,
-    cima: player.y + 16,
-    baixo: player.y + player.size
-}
+// hitbox do player
+//let player_hitbox = {
+//    esquerda: player.x + 50,
+//    direita: player.x + player.size - 50,
+//    cima: player.y + 16,
+//    baixo: player.y + player.size
+//}
 
 // se sy = 0, o personagem esta virado para direita
 // se sy = 1, o personagem esta virado para esquerda
 
 
-const CHAO_Y = 750;
+const CHAO_Y = 700;
 let velocidade = 2;
 let velocidade_pulo = 4;
 let gravidade = 3;
@@ -161,6 +162,15 @@ function animacao(){
     if(cair && !pular){
         player.y += gravidade;
         player.sx = 3;
+    }
+
+    //teste
+    if(player.x + 50 <= 0){
+        player.x = -50
+    }
+
+    if(player.x - 50 >= 1450){
+        player.x = 1500
     }
 
     requestAnimationFrame(animacao);
