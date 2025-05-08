@@ -18,7 +18,7 @@ let player = {
     sx: 0,
     sy: 0,
     x: 100,
-    y: 600,
+    y: 550,
     size: 150,
     img: new Image(),
     desenha: function(){
@@ -95,6 +95,8 @@ document.addEventListener('keyup', function(evento){
 
 function animacao(){    
     ctx.clearRect(0,0,1600,800);
+
+    map_test.desenha()
 
     player.desenha();
 
