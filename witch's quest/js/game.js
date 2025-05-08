@@ -40,7 +40,7 @@ let player_hitbox = {
 // se sy = 1, o personagem esta virado para esquerda
 
 
-const CHAO_Y = 700;
+const CHAO_Y = 750;
 let velocidade = 2;
 let velocidade_pulo = 4;
 let gravidade = 3;
@@ -148,7 +148,7 @@ function animacao(){
     }
 
     // Gravidade (cair)
-    if(player_hitbox.baixo < CHAO_Y){
+    if(player.y + player.size < CHAO_Y){
         cair = true;
         onground = false;
     } else {
