@@ -41,23 +41,13 @@ let player = {
 // se sy = 1, o personagem esta virado para esquerda
 
 
-const CHAO_Y = 700;
-let velocidade = 2;
-let velocidade_pulo = 4;
-let gravidade = 3;
-
-let limite_pulo = 0;
 let frame = 0;
 let if_frame = 24;
-
 let andar_direita = false;
 let andar_esquerda = false;
+let andar_cima = false;
+let andar_baixo = false;
 let correr = false;
-let pular = false;
-let cair = false;
-let onground = true;
-let pulos_realizados = 0;
-let max_pulos = 2;
 
 player.sx = 1;
 
@@ -72,21 +62,24 @@ document.addEventListener('keydown', function(evento){
         velocidade = 4;
         if_frame = 12;
     }
-
+    
     if(tecla === 'ArrowRight'){
         andar_direita = true;
         andar_esquerda = false;
     }
     if(tecla === 'ArrowLeft'){
-        andar_esquerda = true;
         andar_direita = false;
+        andar_esquerda = true;
+    }
+    if(tecla === 'ArrowUp'){
+        andar_cima = true;
+        andar_baixo = false
+    }
+    if(tecla === 'ArrowDown'){
+        andar_cima = false;
+        andar_baixo = true
     }
 
-    if(tecla === 'ArrowUp' && pulos_realizados < max_pulos){
-        pular = true;
-        limite_pulo = 0;
-        pulos_realizados++;
-    }
 });
 
 document.addEventListener('keyup', function(evento){
@@ -102,6 +95,15 @@ document.addEventListener('keyup', function(evento){
         andar_esquerda = false;
         player.sx = 1;
     }
+    if(tecla_solta === 'ArrowUp'){
+        andar_cima = false;
+        player.sx = 1;
+    }
+
+    if(tecla_solta === 'ArrowDown'){
+        andar_baixo = false;
+        player.sx = 1;
+    }
 
     if(tecla_solta === 'Shift'){
         correr = false;
@@ -113,10 +115,9 @@ document.addEventListener('keyup', function(evento){
 function animacao(){    
     ctx.clearRect(0, 0, 1600, 800);
 
-    map_test.desenha();
     player.desenha();
 
-    // Movimento horizontal
+    // Movimento
     if(andar_direita){
         player.x += velocidade;
         player.sy = 0;
@@ -126,7 +127,6 @@ function animacao(){
             frame = 0;
         }
     }
-
     if(andar_esquerda){
         player.x -= velocidade;
         player.sy = 1;
@@ -135,16 +135,22 @@ function animacao(){
             player.sx = (player.sx === 1) ? 2 : 1;
             frame = 0;
         }
+    }if(andar_cima){
+        player.x -= velocidade;
+        player.sy = 0;
+        frame++;
+        if(frame >= if_frame){
+            player.sx = (player.sx === 1) ? 2 : 1;
+            frame = 0;
+        }
     }
-
-    // Pulo
-    if(pular){
-        player.y -= velocidade_pulo;
-        player.sx = 3;
-        limite_pulo += velocidade_pulo;
-        if(limite_pulo >= 120){
-            pular = false;
-            cair = true;
+    if(andar_baixo){
+        player.x += velocidade;
+        player.sy = 1;
+        frame++;
+        if(frame >= if_frame){
+            player.sx = (player.sx === 1) ? 2 : 1;
+            frame = 0;
         }
     }
 
