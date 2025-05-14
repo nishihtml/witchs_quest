@@ -21,8 +21,8 @@ let player = {
 let enemy = {
     sx: 1,
     sy: 0,
-    x: 400,
-    y: 400,
+    x: 0,
+    y: 0,
     size: 100,
     img: new Image(),
     desenha: function(){
@@ -55,6 +55,9 @@ let enemy_frame = 0
 let enemy_if_frame = 48
 let enemy_velocidade = 1
 let enemy_vida = 2
+
+let empurrado = false
+let tempo_empurro = 0
 
 player.sx = 1;
 
@@ -223,6 +226,13 @@ function animacao(){
     if(enemy_if_frame <= enemy_frame && enemy.sx == 2){
         enemy.sx = 1
         enemy_frame = 0
+    }
+
+    //COLLISÃO ENTRE PLAYER E ENEMY
+
+    if(player.y < enemy.y + 150 && player.y + 150 > enemy.y || player.x < enemy.x + 150 && player.x + 150 > enemy.y){
+        player.x = 400
+        player.y = 400
     }
     
     requestAnimationFrame(animacao);
