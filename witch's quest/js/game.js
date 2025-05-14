@@ -1,6 +1,8 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext('2d');
 
+let jogo = true
+
 let player = {
     sx: 1,
     sy: 0,
@@ -16,8 +18,22 @@ let player = {
     }
 }
 
+let enemy = {
+    sx: 1,
+    sy: 0,
+    x: 400,
+    y: 400,
+    size: 100,
+    img: new Image(),
+    desenha: function(){
+        this.img.src = "../dataset/enemy_sprite.png";
+        ctx.beginPath();
+        ctx.drawImage(this.img, this.size * this.sx, this.size * this.sy, this.size, this.size, this.x, this.y, this.size, this.size);
+        ctx.closePath();
+    }
+}
+
 // hitbox do player
-//let player_hitbox = {
 //    esquerda: player.x + 50,
 //    direita: player.x + player.size - 50,
 //    cima: player.y + 16,
@@ -31,8 +47,14 @@ let andar_direita = false;
 let andar_esquerda = false;
 let andar_cima = false;
 let andar_baixo = false;
+let player_vida = 3;
 let correr = false;
-let animacao_vertical = 0
+let animacao_vertical = 0;
+
+let enemy_frame = 0
+let enemy_if_frame = 48
+let enemy_velocidade = 1
+let enemy_vida = 2
 
 player.sx = 1;
 
@@ -102,13 +124,14 @@ document.addEventListener('keyup', function(evento){
 function animacao(){    
     ctx.clearRect(0, 0, 1600, 800);
 
+    //PLAYER
+    if(andar_direita == true || andar_esquerda == true || andar_cima == true || andar_baixo == true){
+        frame += 1
+    }
     player.desenha();
-
-    // Movimento
     if(andar_direita == true){
         player.x += velocidade;
         player.sy = 2;
-        frame += 1
         if(frame >= if_frame && player.sx == 1){
             player.sx = 2
             frame = 0
@@ -121,7 +144,6 @@ function animacao(){
     if(andar_esquerda == true){
         player.x -= velocidade;
         player.sy = 1;
-        frame += 1
         if(frame >= if_frame && player.sx == 1){
             player.sx = 2
             frame = 0
@@ -134,7 +156,6 @@ function animacao(){
     if(andar_cima == true){
         player.y -= velocidade;
         player.sy = 3;
-        frame += 1
         if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
             player.sx = 2
             frame = 0
@@ -157,7 +178,6 @@ function animacao(){
     if(andar_baixo == true){
         player.y += velocidade;
         player.sy = 0;
-        frame += 1
         if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
             player.sx = 2
             frame = 0
@@ -178,7 +198,36 @@ function animacao(){
         }
     }
 
+    //ENEMY
+
+    enemy.desenha()
+    if(player.x > enemy.x){
+        enemy.x += enemy_velocidade
+        enemy.sy = 1 
+    }
+    if(player.x < enemy.x){
+        enemy.x -= enemy_velocidade
+        enemy.sy = 0
+    }
+    if(player.y > enemy.y){
+        enemy.y += enemy_velocidade
+    }
+    if(player.y < enemy.y){
+        enemy.y -= enemy_velocidade
+    }
+    enemy_frame += 1
+    if(enemy_if_frame <= enemy_frame && enemy.sx == 1){
+        enemy.sx = 2
+        enemy_frame = 0
+    }
+    if(enemy_if_frame <= enemy_frame && enemy.sx == 2){
+        enemy.sx = 1
+        enemy_frame = 0
+    }
+    
     requestAnimationFrame(animacao);
 }
 
-animacao();
+if(jogo = true){
+    animacao();
+}
