@@ -1,7 +1,39 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext('2d');
 
-let jogo = true
+let inicio = true
+let jogo = false
+let gameover = false
+
+let tutorial = {
+    sx: 0,
+    sy: 0,
+    x: 0,
+    y: 0,
+    size: 800,
+    img: new Image(),
+    desenha: function(){
+        this.img.src = "../dataset/tutorial.png";
+        ctx.beginPath();
+        ctx.drawImage(this.img, this.size * this.sx, this.size * this.sy, this.size, this.size, this.x, this.y, this.size, this.size);
+        ctx.closePath();
+    }
+}
+
+let botao = {
+    sx: 0,
+    sy: 0,
+    x: 540,
+    y: 670,
+    size: 200,
+    img: new Image(),
+    desenha: function(){
+        this.img.src = "../dataset/botao.png";
+        ctx.beginPath();
+        ctx.drawImage(this.img, this.size * this.sx, this.size * 0.4 * this.sy, this.size, this.size*0.4, this.x, this.y, this.size, this.size*0.4);
+        ctx.closePath();
+    }
+}
 
 let player = {
     sx: 1,
@@ -124,6 +156,13 @@ document.addEventListener('keyup', function(evento){
     }
 });
 
+function gamestart(){
+    tutorial.desenha()
+    botao.desenha()
+
+    requestAnimationFrame(gamestart)
+}
+
 function animacao(){    
     ctx.clearRect(0, 0, 1600, 800);
 
@@ -204,20 +243,20 @@ function animacao(){
     //ENEMY
 
     enemy.desenha()
-    if(player.x > enemy.x){
-        enemy.x += enemy_velocidade
-        enemy.sy = 1 
-    }
-    if(player.x < enemy.x){
-        enemy.x -= enemy_velocidade
-        enemy.sy = 0
-    }
-    if(player.y > enemy.y){
-        enemy.y += enemy_velocidade
-    }
-    if(player.y < enemy.y){
-        enemy.y -= enemy_velocidade
-    }
+    // if(player.x > enemy.x){
+    //     enemy.x += enemy_velocidade
+    //     enemy.sy = 1 
+    // }
+    // if(player.x < enemy.x){
+    //     enemy.x -= enemy_velocidade
+    //     enemy.sy = 0
+    // }
+    // if(player.y > enemy.y){
+    //     enemy.y += enemy_velocidade
+    // }
+    // if(player.y < enemy.y){
+    //     enemy.y -= enemy_velocidade
+    // }
     enemy_frame += 1
     if(enemy_if_frame <= enemy_frame && enemy.sx == 1){
         enemy.sx = 2
@@ -230,14 +269,17 @@ function animacao(){
 
     //COLLISÃO ENTRE PLAYER E ENEMY
 
-    if(player.y < enemy.y + 150 && player.y + 150 > enemy.y || player.x < enemy.x + 150 && player.x + 150 > enemy.y){
-        player.x = 400
-        player.y = 400
+    if(player.y <= enemy.y + 100 && player.y + 100 >= enemy.y && player.x <= enemy.x + 100 && player.x + 100 >= enemy.x){
+        
     }
     
     requestAnimationFrame(animacao);
 }
 
-if(jogo = true){
+if(inicio == true){
+    gamestart()
+}
+
+if(jogo == true){
     animacao();
 }
