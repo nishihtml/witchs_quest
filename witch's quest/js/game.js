@@ -157,14 +157,29 @@ document.addEventListener('keyup', function(evento){
 });
 
 function gamestart(){
+    ctx.clearRect(0, 0, 800, 800)
     tutorial.desenha()
     botao.desenha()
-
     requestAnimationFrame(gamestart)
+    document.addEventListener('mousemove', function(evento){
+        let rect = canvas.getBoundingClientRect()
+        let x_mouse = evento.clientX - rect.left;
+        let y_mouse = evento.clientY - rect.top;;
+
+        if(x_mouse >= 540 && x_mouse <= 740 && y_mouse >= 670 && y_mouse <= 750){
+            botao.sx = 1
+        }
+        else{
+            botao.sx = 0
+        }
+    })
+
+    
+
 }
 
 function animacao(){    
-    ctx.clearRect(0, 0, 1600, 800);
+    ctx.clearRect(0, 0, 800, 800);
 
     //PLAYER
     if(andar_direita == true || andar_esquerda == true || andar_cima == true || andar_baixo == true){
