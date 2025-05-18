@@ -156,145 +156,147 @@ document.addEventListener('keyup', function(evento){
     }
 });
 
-function gamestart(){
+function animacao(){
+
     ctx.clearRect(0, 0, 800, 800)
-    tutorial.desenha()
-    botao.desenha()
-    requestAnimationFrame(gamestart)
-    document.addEventListener('mousemove', function(evento){
-        let rect = canvas.getBoundingClientRect()
-        let x_mouse = evento.clientX - rect.left;
-        let y_mouse = evento.clientY - rect.top;;
-
-        if(x_mouse >= 540 && x_mouse <= 740 && y_mouse >= 670 && y_mouse <= 750){
-            botao.sx = 1
-        }
-        else{
-            botao.sx = 0
-        }
-    })
-
     
+    if(inicio == true){
+        tutorial.desenha()
+        botao.desenha()
+        document.addEventListener('mousemove', function(evento){
+            let rect = canvas.getBoundingClientRect()
+            let x_mouse = evento.clientX - rect.left
+            let y_mouse = evento.clientY - rect.top;
 
-}
+            if(x_mouse >= 540 && x_mouse <= 740 && y_mouse >= 670 && y_mouse <= 750){
+                botao.sx = 1
+            }
+            else{
+                botao.sx = 0
+            }
+        })
+        canvas.addEventListener('click', (evento) => {
+            let rect = canvas.getBoundingClientRect()
+            let x_mouse = evento.clientX - rect.left;
+            let y_mouse = evento.clientY - rect.top;
 
-function animacao(){    
-    ctx.clearRect(0, 0, 800, 800);
+            if(x_mouse >= 540 && x_mouse <= 740 && y_mouse >= 670 && y_mouse <= 750){
+                inicio = false
+                jogo = true
+            }
+        });
+    }
 
     //PLAYER
-    if(andar_direita == true || andar_esquerda == true || andar_cima == true || andar_baixo == true){
-        frame += 1
-    }
-    player.desenha();
-    if(andar_direita == true){
-        player.x += velocidade;
-        player.sy = 2;
-        if(frame >= if_frame && player.sx == 1){
-            player.sx = 2
-            frame = 0
+    if(jogo == true){
+        if(andar_direita == true || andar_esquerda == true || andar_cima == true || andar_baixo == true){
+            frame += 1
         }
-        if(frame >= if_frame && player.sx == 2){
-            player.sx = 1
-            frame = 0
+        player.desenha();
+        if(andar_direita == true){
+            player.x += velocidade;
+            player.sy = 2;
+            if(frame >= if_frame && player.sx == 1){
+                player.sx = 2
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 2){
+                player.sx = 1
+                frame = 0
+            }
         }
-    }
-    if(andar_esquerda == true){
-        player.x -= velocidade;
-        player.sy = 1;
-        if(frame >= if_frame && player.sx == 1){
-            player.sx = 2
-            frame = 0
+        if(andar_esquerda == true){
+            player.x -= velocidade;
+            player.sy = 1;
+            if(frame >= if_frame && player.sx == 1){
+                player.sx = 2
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 2){
+                player.sx = 1
+                frame = 0
+            }
         }
-        if(frame >= if_frame && player.sx == 2){
-            player.sx = 1
-            frame = 0
+        if(andar_cima == true){
+            player.y -= velocidade;
+            player.sy = 3;
+            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
+                player.sx = 2
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
+                player.sx = 1
+                frame = 0
+                animacao_vertical = 1
+            }
+            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
+                player.sx = 3
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
+                player.sx = 1
+                frame = 0
+                animacao_vertical = 0
+            }
         }
-    }
-    if(andar_cima == true){
-        player.y -= velocidade;
-        player.sy = 3;
-        if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
-            player.sx = 2
-            frame = 0
+        if(andar_baixo == true){
+            player.y += velocidade;
+            player.sy = 0;
+            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
+                player.sx = 2
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
+                player.sx = 1
+                frame = 0
+                animacao_vertical = 1
+            }
+            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
+                player.sx = 3
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
+                player.sx = 1
+                frame = 0
+                animacao_vertical = 0
+            }
         }
-        if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
-            player.sx = 1
-            frame = 0
-            animacao_vertical = 1
-        }
-        if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
-            player.sx = 3
-            frame = 0
-        }
-        if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
-            player.sx = 1
-            frame = 0
-            animacao_vertical = 0
-        }
-    }
-    if(andar_baixo == true){
-        player.y += velocidade;
-        player.sy = 0;
-        if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
-            player.sx = 2
-            frame = 0
-        }
-        if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
-            player.sx = 1
-            frame = 0
-            animacao_vertical = 1
-        }
-        if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
-            player.sx = 3
-            frame = 0
-        }
-        if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
-            player.sx = 1
-            frame = 0
-            animacao_vertical = 0
-        }
-    }
 
-    //ENEMY
+        //ENEMY
 
-    enemy.desenha()
-    // if(player.x > enemy.x){
-    //     enemy.x += enemy_velocidade
-    //     enemy.sy = 1 
-    // }
-    // if(player.x < enemy.x){
-    //     enemy.x -= enemy_velocidade
-    //     enemy.sy = 0
-    // }
-    // if(player.y > enemy.y){
-    //     enemy.y += enemy_velocidade
-    // }
-    // if(player.y < enemy.y){
-    //     enemy.y -= enemy_velocidade
-    // }
-    enemy_frame += 1
-    if(enemy_if_frame <= enemy_frame && enemy.sx == 1){
-        enemy.sx = 2
-        enemy_frame = 0
-    }
-    if(enemy_if_frame <= enemy_frame && enemy.sx == 2){
-        enemy.sx = 1
-        enemy_frame = 0
-    }
+        enemy.desenha()
+        // if(player.x > enemy.x){
+        //     enemy.x += enemy_velocidade
+        //     enemy.sy = 1 
+        // }
+        // if(player.x < enemy.x){
+        //     enemy.x -= enemy_velocidade
+        //     enemy.sy = 0
+        // }
+        // if(player.y > enemy.y){
+        //     enemy.y += enemy_velocidade
+        // }
+        // if(player.y < enemy.y){
+        //     enemy.y -= enemy_velocidade
+        // }
+        enemy_frame += 1
+        if(enemy_if_frame <= enemy_frame && enemy.sx == 1){
+            enemy.sx = 2
+            enemy_frame = 0
+        }
+        if(enemy_if_frame <= enemy_frame && enemy.sx == 2){
+            enemy.sx = 1
+            enemy_frame = 0
+        }
 
-    //COLLISÃO ENTRE PLAYER E ENEMY
+        //COLLISÃO ENTRE PLAYER E ENEMY
 
-    if(player.y <= enemy.y + 100 && player.y + 100 >= enemy.y && player.x <= enemy.x + 100 && player.x + 100 >= enemy.x){
-        
+        if(player.y <= enemy.y + 100 && player.y + 100 >= enemy.y && player.x <= enemy.x + 100 && player.x + 100 >= enemy.x){
+            
+        }
     }
-    
     requestAnimationFrame(animacao);
+    
 }
 
-if(inicio == true){
-    gamestart()
-}
-
-if(jogo == true){
-    animacao();
-}
+animacao()
