@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Witch's Quest</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <script src="../js/main.js" defer></script>  <!-- Defer = carregar o JS somente após HTML, usado para loadings-->
+</head>
+<body>
+  <header>
+    <div id="loading-screen">
+      <h1>Carregando...</h1>
+      <div class="loading-magic"></div>
+    </div>
+    <nav class="navbar">
+      <div class="logo">Witch's Quest</div>
+      <ul class="nav-links">
+        <li><a href="">Início</a></li>
+        <li><a href="credits.html">Desenvolvedores</a></li>
+        <li><a href="game.html">Jogar</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero">
+      <div class="hero-text">
+        <h1>Bem-vindo ao Witch's Quest</h1>
+        <p>Ajude a jovem bruxa a restaurar o equilíbrio entre os reinos encantados!</p>
+        <a href="game.html" class="cta-button">Começar Aventura</a>
+      </div>
+      <img src="../dataset/banner.png" alt="Banner Witch's Quest" class="hero-img">
+    </section>
+
+    <section id="tutorial" class="tutorial">
+      <h2>Controles do Jogo</h2>
+      <div class="controls-grid">
+        <div class="control"><strong>&uarr;</strong> - Cima</div>
+        <div class="control"><strong>&darr;</strong> - Baixo</div>
+        <div class="control"><strong>&larr;</strong> - Esquerda</div>
+        <div class="control"><strong>&rarr;</strong> - Direita</div>
+        <div class="control"><strong>Espaço</strong> - Lançar feitiço</div>
+      </div>
+    </section>
+
+    <section id="devs" class="devs">
+      <h2>Sobre os Desenvolvedores</h2>
+      <p>Estudantes da FEI apaixonados por magia, código e criatividade. Este projeto foi feito com carinho para a disciplina de Programação Fullstack.</p>
+    </section>
+
+    <section id="jogar" class="play-section">
+      <h2>Vamos Jogar!</h2>
+      <a href="game.html" class="cta-button">Iniciar Jogo</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>2025 Witch's Quest. Feito com magia, HTML, CSS e JS. Por alunos da FEI. 🧙‍♀️✨</p>
+  </footer>
+</body>
+</html>

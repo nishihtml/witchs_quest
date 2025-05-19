@@ -1,79 +1,89 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Créditos - Witch's Quest</title>
-    <link rel="stylesheet" href="../styles/main.css">
-    <link rel="stylesheet" href="../styles/credits.css">
+  <meta charset="UTF-8">
+  <title>Créditos - Witch's Quest</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/credits.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <script src="../js/main.js" defer></script> <!-- Defer = carregar o JS somente após HTML, usado para loadings-->
+
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <div class="logo">Witch's Quest</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Início</a></li>
-                <li><a href="#">Créditos</a></li>
-                <li><a href="index.html#play">Jogar</a></li>
-            </ul>
-        </div>
-    </header>
 
+  <header>
+    <div id="loading-screen">
+      <h1>Carregando...</h1>
+      <div class="loading-magic"></div>
+    </div>
+    <nav class="navbar">
+      <div class="logo">Witch's Quest</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="#">Créditos</a></li>
+        <li><a href="index.html#play">Jogar</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
     <section class="hero">
-        <div class="hero-text">
-            <h1>Créditos</h1>
-            <p>Conheça os criadores e as magias por trás de <strong>Witch's Quest</strong>.</p>
-        </div>
-        <img src="../dataset/banner.png" alt="Banner Witch's Quest" class="hero-img">
+      <div class="hero-text">
+        <h1>Créditos</h1>
+        <p>Conheça os criadores e as magias por trás de <strong>Witch's Quest</strong>.</p>
+      </div>
+      <img src="../dataset/banner.png" alt="Banner Witch's Quest" class="hero-img">
     </section>
 
     <section class="dev-cards">
-        <h2>Equipe de Desenvolvimento</h2>
-        <div class="cards-container">
-            <div class="card">
-                <img src="../dataset/dev2.png" alt="Dev Icon">
-                <h3>Guilherme Faria</h3>
-                <p>Web Developer</p>
-            </div>
-            <div class="card">
-                <img src="../dataset/dev1.png" alt="Dev Icon">
-                <h3>Gustavo Nishi</h3>
-                <p>Gaming Developer</p>
-            </div>
+      <h2>Equipe de Desenvolvimento</h2>
+      <div class="cards-container">
+        <div class="card">
+          <img src="../dataset/dev2.png" alt="Dev Icon">
+          <h3>Guilherme Faria</h3>
+          <p>Desenvolvedor Web</p>
         </div>
+        <div class="card">
+          <img src="../dataset/dev1.png" alt="Dev Icon">
+          <h3>Gustavo Nishi</h3>
+          <p>Desenvolvedor Games</p>
+        </div>
+      </div>
     </section>
 
     <section class="tech-section">
-        <h2>Feitiços Utilizados</h2>
-        <div class="tech-icons">
-            <div class="tech-card">
-                <img src="../dataset/html5.png" alt="HTML5"> <!-- https://icons8.com.br/icons/set/html5-->
-                <span>HTML5</span>
-            </div>
-            <div class="tech-card">
-                <img src="../dataset/css3.png" alt="CSS3"> <!-- https://icons8.com.br/icons/set/css3-->
-                <span>CSS3</span>
-            </div>
-            <div class="tech-card">
-                <img src="../dataset/javascript.png" alt="JavaScript"> <!-- https://icons8.com.br/icons/set/css3-->
-                <span>JavaScript</span>
-            </div>
-            <div class="tech-card">
-                <img src="../dataset/vscode.png" alt="VSCode">  <!-- https://icons8.com.br/icons/set/vscode-->
-                <span>VS Code</span>
-            </div>
-            <div class="tech-card">
-                <img src="../dataset/github.png" alt="GitHub"> <!-- https://icons8.com.br/icons/set/github-->
-                <span>GitHub</span>
-            </div>
-            <div class="tech-card">
-                <img src="../dataset/asesprite.png" alt="Asesprite">
-                <span>Asesprite</span>
-            </div>
+      <h2>Feitiços Utilizados</h2>
+      <div class="tech-icons">
+        <div class="tech-card">
+          <img src="../dataset/html5.png" alt="HTML5"> <!-- https://icons8.com.br/icons/set/html5 -->
+          <span>HTML5</span>
         </div>
+        <div class="tech-card">
+          <img src="../dataset/css3.png" alt="CSS3"> <!-- https://icons8.com.br/icons/set/css3 -->
+          <span>CSS3</span>
+        </div>
+        <div class="tech-card">
+          <img src="../dataset/javascript.png" alt="JavaScript"> <!-- https://icons8.com.br/icons/set/javascript -->
+          <span>JavaScript</span>
+        </div>
+        <div class="tech-card">
+          <img src="../dataset/vscode.png" alt="VSCode"> <!-- https://icons8.com.br/icons/set/vscode -->
+          <span>VS Code</span>
+        </div>
+        <div class="tech-card">
+          <img src="../dataset/github.png" alt="GitHub"> <!-- https://icons8.com.br/icons/set/github -->
+          <span>GitHub</span>
+        </div>
+        <div class="tech-card">
+          <img src="../dataset/asesprite.png" alt="Asesprite">
+          <span>Asesprite</span>
+        </div>
+      </div>
     </section>
+  </main>
 
-    <footer>
-        <p>2025 Witch's Quest. Feito com magia, HTML, CSS e JS por alunos da FEI. 🧙‍♀️✨</p>
-    </footer>
+  <footer>
+    <p>2025 Witch's Quest. Feito com magia, HTML, CSS e JS por alunos da FEI. 🧙‍♀️✨</p>
+  </footer>
+
 </body>
 </html>
