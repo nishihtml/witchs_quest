@@ -123,6 +123,8 @@ let frame_dano = 0.5
 let atacar = false
 let bullet = false
 
+let pontos = 0
+
 player.sx = 1;
 
 document.addEventListener('keydown', function(evento){
