@@ -80,6 +80,21 @@ let magia = {
     }
 }
 
+let player_status = {
+    sx: 0,
+    sy: 0,
+    x: 0,
+    y: 0,
+    size: 100,
+    img: new Image(),
+    desenha: function(){
+        this.img.src = "../dataset/player_status.png";
+        ctx.beginPath();
+        ctx.drawImage(this.img, this.size * 4 * this.sx, this.size * 4 * this.sy, this.size * 4, this.size * 4, this.x, this.y, this.size, this.size);
+        ctx.closePath();
+    }
+}
+
 let gameover = {
     sx: 0,
     sy: 0,
@@ -106,6 +121,7 @@ let player_vida = 3;
 let correr = false;
 let animacao_vertical = 0;
 let vida_player = 3
+let vida_antiga = 3
 
 let enemy_frame = 0
 let enemy_if_frame = 48
@@ -520,6 +536,14 @@ function animacao(){
             jogo = false
             fim = true
         }
+
+        //STATUS DO JOGADOR
+        player_status.desenha()
+        if(vida_player < vida_antiga){
+            player_status.sx += 1
+            vida_antiga -= 1
+        }
+
         
     //FIM DO JOGO
 
