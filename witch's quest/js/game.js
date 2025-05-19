@@ -82,14 +82,18 @@ let andar_baixo = false;
 let player_vida = 3;
 let correr = false;
 let animacao_vertical = 0;
+let vida_player = 3
 
 let enemy_frame = 0
 let enemy_if_frame = 48
 let enemy_velocidade = 1
 let enemy_vida = 2
 
+let direcao_empurro = 0
 let empurrado = false
 let tempo_empurro = 0
+let invencibilidade = false
+let tempo_invencibilidade = 0
 
 player.sx = 1;
 
@@ -160,6 +164,7 @@ function animacao(){
 
     ctx.clearRect(0, 0, 800, 800)
     
+    //INICIO DO TUTORIAL---
     if(inicio == true){
         tutorial.desenha()
         botao.desenha()
@@ -186,9 +191,11 @@ function animacao(){
             }
         });
     }
+    //---FIM DO TUTORIAL
 
-    //PLAYER
+    //INICIO DO JOGO---
     if(jogo == true){
+        //PLAYER
         if(andar_direita == true || andar_esquerda == true || andar_cima == true || andar_baixo == true){
             frame += 1
         }
@@ -196,25 +203,45 @@ function animacao(){
         if(andar_direita == true){
             player.x += velocidade;
             player.sy = 2;
-            if(frame >= if_frame && player.sx == 1){
+            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
                 player.sx = 2
                 frame = 0
             }
-            if(frame >= if_frame && player.sx == 2){
+            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
                 player.sx = 1
                 frame = 0
+                animacao_vertical = 1
+            }
+            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
+                player.sx = 3
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
+                player.sx = 1
+                frame = 0
+                animacao_vertical = 0
             }
         }
         if(andar_esquerda == true){
             player.x -= velocidade;
             player.sy = 1;
-            if(frame >= if_frame && player.sx == 1){
+            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
                 player.sx = 2
                 frame = 0
             }
-            if(frame >= if_frame && player.sx == 2){
+            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
                 player.sx = 1
                 frame = 0
+                animacao_vertical = 1
+            }
+            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
+                player.sx = 3
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
+                player.sx = 1
+                frame = 0
+                animacao_vertical = 0
             }
         }
         if(andar_cima == true){
@@ -265,20 +292,20 @@ function animacao(){
         //ENEMY
 
         enemy.desenha()
-        // if(player.x > enemy.x){
-        //     enemy.x += enemy_velocidade
-        //     enemy.sy = 1 
-        // }
-        // if(player.x < enemy.x){
-        //     enemy.x -= enemy_velocidade
-        //     enemy.sy = 0
-        // }
-        // if(player.y > enemy.y){
-        //     enemy.y += enemy_velocidade
-        // }
-        // if(player.y < enemy.y){
-        //     enemy.y -= enemy_velocidade
-        // }
+        if(player.x > enemy.x){
+            enemy.x += enemy_velocidade
+            enemy.sy = 1 
+        }
+        if(player.x < enemy.x){
+            enemy.x -= enemy_velocidade
+            enemy.sy = 0
+        }
+        if(player.y > enemy.y){
+            enemy.y += enemy_velocidade
+        }
+        if(player.y < enemy.y){
+            enemy.y -= enemy_velocidade
+        }
         enemy_frame += 1
         if(enemy_if_frame <= enemy_frame && enemy.sx == 1){
             enemy.sx = 2
@@ -291,12 +318,49 @@ function animacao(){
 
         //COLLISÃO ENTRE PLAYER E ENEMY
 
-        if(player.y <= enemy.y + 100 && player.y + 100 >= enemy.y && player.x <= enemy.x + 100 && player.x + 100 >= enemy.x){
-            
+        if(player.y <= enemy.y + 100 && player.y + 100 >= enemy.y && player.x <= enemy.x + 100 && player.x + 100 >= enemy.x && invencibilidade == false){
+            direcao_empurro = Math.floor(Math.random() * 3);
+            empurrado = true
+            invencibilidade = true
         }
-    }
-    requestAnimationFrame(animacao);
-    
-}
+        if(empurrado == true){
+            andar_cima = false
+            andar_baixo = false
+            andar_direita = false
+            andar_esquerda = false
+        }
+        if(direcao_empurro == 0 && empurrado == true){
+             tempo_empurro += 1
+            player.x += 10
+        }
+        if(direcao_empurro == 1 && empurrado == true){
+            tempo_empurro += 1
+            player.x -= 10
+        }
+        if(direcao_empurro == 2 && empurrado == true){
+            tempo_empurro += 1
+            player.y += 10
+        }
+        if(direcao_empurro == 3 && empurrado == true){
+            tempo_empurro += 1
+            player.y -= 10
+        }
+        if(tempo_empurro >= 10){
+            empurrado = false
+            tempo_empurro = 0
+        }
+        if(invencibilidade == true){
+            tempo_invencibilidade += 1
+            if(tempo_invencibilidade >= 1000){
+                invencibilidade = false
+                tempo_invencibilidade = 0
+            }
+        }
+        
+    //FIM DO JOGO
 
+    
+    }    
+requestAnimationFrame(animacao);
+}
 animacao()
