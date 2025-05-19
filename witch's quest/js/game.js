@@ -120,8 +120,10 @@ let andar_baixo = false;
 let player_vida = 3;
 let correr = false;
 let animacao_vertical = 0;
+
 let vida_player = 3
 let vida_antiga = 3
+let tempo_status = 0
 
 let enemy_frame = 0
 let enemy_if_frame = 48
@@ -138,6 +140,9 @@ let frame_dano = 0.5
 
 let atacar = false
 let bullet = false
+
+let player_caido = false
+let tempo_caido = 0
 
 let pontos = 0
 
@@ -246,7 +251,9 @@ function animacao(){
     }
     //---FIM DO TUTORIAL
 
-    //INICIO DO GAMEOVER
+    //INICIO DO GAMEOVER---
+
+    
     if(fim == true){
         gameover.desenha()
         botao.desenha()
@@ -271,16 +278,43 @@ function animacao(){
                 vida_player = 3
                 player.x = 400
                 player.y = 400
+                player.sx = 1
+                player.sy = 0
+                player_status.sx = 0
+                vida_player = 3
+                vida_antiga = 3
                 fim = false
                 jogo = true
+                empurrado = false
+                player_parado = false
+                player_caido = false
+                invencibilidade = false
             }
         });
     }
-    //FIM DO GAMEOVER
+    //---FIM DO GAMEOVER
 
 
     //INICIO DO JOGO---
     if(jogo == true){
+        
+        //CONDIÇÃO DE FIM DE JOGO
+        if(player_caido == true){
+            player.sx = 2
+            player.sy = 4
+            tempo_caido += 1
+            player_parado = true
+            andar_baixo = false
+            andar_cima = false
+            andar_direita = false
+            andar_esquerda = false
+            if(tempo_caido >= 120){
+                tempo_caido = 0
+                jogo = false
+                fim = true
+            }
+        }
+
         //PLAYER
         if(andar_direita == true || andar_esquerda == true || andar_cima == true || andar_baixo == true){
             frame += 1
@@ -308,7 +342,7 @@ function animacao(){
                 animacao_vertical = 0
             }
         }
-        if(andar_esquerda == true && player_parado == false){
+        if(andar_esquerda == true && player_parado == false && atacar == false){
             player.x -= velocidade;
             player.sy = 1;
             if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
@@ -330,7 +364,7 @@ function animacao(){
                 animacao_vertical = 0
             }
         }
-        if(andar_cima == true && player_parado == false){
+        if(andar_cima == true && player_parado == false && atacar == false){
             player.y -= velocidade;
             player.sy = 3;
             if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
@@ -352,7 +386,7 @@ function animacao(){
                 animacao_vertical = 0
             }
         }
-        if(andar_baixo == true && player_parado == false){
+        if(andar_baixo == true && player_parado == false && atacar == false){
             player.y += velocidade;
             player.sy = 0;
             if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
@@ -469,53 +503,55 @@ function animacao(){
         }
 
         //ATAQUE DO PLAYER
-        // if(atacar == true && player_parado == false && empurrado == false && bullet == false){
-        //     player.sx = 4
-        //     andar_cima = false
-        //     andar_baixo = false
-        //     andar_direita = false
-        //     andar_esquerda = false
-        //     if(player.sy == 0){
-        //         andar_cima = false
-        //         andar_direita = false
-        //         andar_esquerda = false
-        //         magia.sx = 0
-        //         magia.sy = 0
-        //         magia.desenha()
-        //         bullet == true
-        //         magia.y += velocidade * 2.5
-        //     }
-        //     if(player.sy == 1){
-        //         andar_baixo = false
-        //         andar_cima = false
-        //         andar_esquerda = false
-        //         magia.sx = 0
-        //         magia.sy = 1
-        //         magia.desenha()
-        //         bullet == true
-        //         magia.x -= velocidade * 2.5
-        //     }
-        //     if(player.sy == 2){
-        //         andar_baixo = false
-        //         andar_cima = false
-        //         andar_direita = false
-        //         magia.sx = 1
-        //         magia.sy = 1
-        //         magia.desenha()
-        //         bullet == true
-        //         magia.x += velocidade * 2.5
-        //     }
-        //     if(player.sy == 3){
-        //         andar_cima = false
-        //         andar_direita = false
-        //         andar_esquerda = false
-        //         magia.sx = 1
-        //         magia.sy = 0
-        //         magia.desenha()
-        //         bullet == true
-        //         magia.y -= velocidade * 2.5
-        //     }
-        // }
+        magia.x = player.x
+        magia.y = player.y 
+        if(atacar == true && player_parado == false && empurrado == false && bullet == false){
+            player.sx = 4
+            andar_cima = false
+            andar_baixo = false
+            andar_direita = false
+            andar_esquerda = false
+            if(player.sy == 0){
+                andar_cima = false
+                andar_direita = false
+                andar_esquerda = false
+                magia.sx = 0
+                magia.sy = 0
+                magia.desenha()
+                bullet == true
+                magia.y += velocidade * 2.5
+            }
+            if(player.sy == 1){
+                andar_baixo = false
+                andar_cima = false
+                andar_esquerda = false
+                magia.sx = 0
+                magia.sy = 1
+                magia.desenha()
+                bullet == true
+                magia.x -= velocidade * 2.5
+            }
+            if(player.sy == 2){
+                andar_baixo = false
+                andar_cima = false
+                andar_direita = false
+                magia.sx = 1
+                magia.sy = 1
+                magia.desenha()
+                bullet == true
+                magia.x += velocidade * 2.5
+            }
+            if(player.sy == 3){
+                andar_cima = false
+                andar_direita = false
+                andar_esquerda = false
+                magia.sx = 1
+                magia.sy = 0
+                magia.desenha()
+                bullet == true
+                magia.y -= velocidade * 2.5
+            }
+        }
 
         //COLLISÃO DE PAREDE
         if(player.x <= 0){
@@ -531,28 +567,29 @@ function animacao(){
             player.y = 700
         }
 
-        //CONDIÇÃO DE FIM DE JOGO
-        if(vida_player <= 0){
-            jogo = false
-            fim = true
-        }
-
         //STATUS DO JOGADOR
         player_status.desenha()
-        if(empurrado == true){
-            player_status.sx = 3
-            if(empurrado == false){
-                player_status.sx = vida_antiga - 1
-            }
-        }
         if(vida_player < vida_antiga){
-            vida_antiga -= 1
+            tempo_status += 1
+            player_status.sx = 3
+            if (tempo_status >= 48){
+                vida_antiga -= 1
+                tempo_status = 0
+                if(vida_player == 2){
+                    player_status.sx = 1
+                }
+                if(vida_player == 1){
+                    player_status.sx = 2
+                }
+                if(vida_player <= 0){
+                    player_status.sx = 4
+                    player_caido = true
+                }
+            }
         }
 
         
-    //FIM DO JOGO
-
-    
+    //---FIM DO JOGO
     }    
     requestAnimationFrame(animacao);
 }
