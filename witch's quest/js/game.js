@@ -94,6 +94,7 @@ let empurrado = false
 let tempo_empurro = 0
 let invencibilidade = false
 let tempo_invencibilidade = 0
+let player_parado = false
 
 player.sx = 1;
 
@@ -200,7 +201,7 @@ function animacao(){
             frame += 1
         }
         player.desenha();
-        if(andar_direita == true){
+        if(andar_direita == true && player_parado == false){
             player.x += velocidade;
             player.sy = 2;
             if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
@@ -222,7 +223,7 @@ function animacao(){
                 animacao_vertical = 0
             }
         }
-        if(andar_esquerda == true){
+        if(andar_esquerda == true && player_parado == false){
             player.x -= velocidade;
             player.sy = 1;
             if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
@@ -244,7 +245,7 @@ function animacao(){
                 animacao_vertical = 0
             }
         }
-        if(andar_cima == true){
+        if(andar_cima == true && player_parado == false){
             player.y -= velocidade;
             player.sy = 3;
             if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
@@ -266,7 +267,7 @@ function animacao(){
                 animacao_vertical = 0
             }
         }
-        if(andar_baixo == true){
+        if(andar_baixo == true && player_parado == false){
             player.y += velocidade;
             player.sy = 0;
             if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
@@ -328,6 +329,8 @@ function animacao(){
             andar_baixo = false
             andar_direita = false
             andar_esquerda = false
+            player.sx = 1
+            player.sy = 4
         }
         if(direcao_empurro == 0 && empurrado == true){
              tempo_empurro += 1
@@ -347,7 +350,19 @@ function animacao(){
         }
         if(tempo_empurro >= 10){
             empurrado = false
+            player_parado = true
             tempo_empurro = 0
+        }
+        if(player_parado == true){
+            andar_cima = false
+            andar_baixo = false
+            andar_direita = false
+            andar_esquerda = false
+            tempo_empurro += 1
+            if(tempo_empurro == 10){
+                player_parado = false
+                tempo_empurro = 0
+            }
         }
         if(invencibilidade == true){
             tempo_invencibilidade += 1
@@ -359,7 +374,6 @@ function animacao(){
         
     //FIM DO JOGO
 
-    
     }    
 requestAnimationFrame(animacao);
 }
