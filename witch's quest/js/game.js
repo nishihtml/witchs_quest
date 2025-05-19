@@ -544,7 +544,7 @@ function animacao(){
             atacar = false
             player.sx = 1
         }
-        
+
         //STATUS DO JOGADOR
         player_status.desenha()
         if(vida_player < vida_antiga){
@@ -565,8 +565,6 @@ function animacao(){
                 }
             }
         }
-
-        
     //---FIM DO JOGO
     }    
     requestAnimationFrame(animacao);
