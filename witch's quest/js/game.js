@@ -539,8 +539,13 @@ function animacao(){
 
         //STATUS DO JOGADOR
         player_status.desenha()
+        if(empurrado == true){
+            player_status.sx = 3
+            if(empurrado == false){
+                player_status.sx = vida_antiga - 1
+            }
+        }
         if(vida_player < vida_antiga){
-            player_status.sx += 1
             vida_antiga -= 1
         }
 
