@@ -68,8 +68,8 @@ let enemy = {
 let magia = {
     sx: 0,
     sy: 0,
-    x: 0,
-    y: 0,
+    x: player.x + 30,
+    y: player.y + 50,
     size: 40,
     img: new Image(),
     desenha: function(){
@@ -136,10 +136,13 @@ let tempo_empurro = 0
 let invencibilidade = false
 let tempo_invencibilidade = 0
 let player_parado = false
-let frame_dano = 0.5
+let tempo_parado = 0
+let frame_dano = 1
 
 let atacar = false
-let bullet = false
+
+let enemy_parado = false
+let tempo_enemy_parado = 0
 
 let player_caido = false
 let tempo_caido = 0
@@ -252,8 +255,6 @@ function animacao(){
     //---FIM DO TUTORIAL
 
     //INICIO DO GAMEOVER---
-
-    
     if(fim == true){
         gameover.desenha()
         botao.desenha()
@@ -318,120 +319,72 @@ function animacao(){
         //PLAYER
         if(andar_direita == true || andar_esquerda == true || andar_cima == true || andar_baixo == true){
             frame += 1
+            if(frame >= if_frame && (player.sx == 1 || player.sx == 4) && animacao_vertical == 0){
+                player.sx = 2
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
+                player.sx = 1
+                frame = 0
+                animacao_vertical = 1
+            }
+            if(frame >= if_frame && (player.sx == 1 || player.sx == 4) && animacao_vertical == 1){
+                player.sx = 3
+                frame = 0
+            }
+            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
+                player.sx = 1
+                frame = 0
+                animacao_vertical = 0
+            }
         }
         player.desenha();
         if(andar_direita == true && player_parado == false && atacar == false){
             player.x += velocidade;
             player.sy = 2;
-            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
-                player.sx = 2
-                frame = 0
-            }
-            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
-                player.sx = 1
-                frame = 0
-                animacao_vertical = 1
-            }
-            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
-                player.sx = 3
-                frame = 0
-            }
-            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
-                player.sx = 1
-                frame = 0
-                animacao_vertical = 0
-            }
+            magia.x = player.x + 30
         }
         if(andar_esquerda == true && player_parado == false && atacar == false){
             player.x -= velocidade;
             player.sy = 1;
-            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
-                player.sx = 2
-                frame = 0
-            }
-            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
-                player.sx = 1
-                frame = 0
-                animacao_vertical = 1
-            }
-            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
-                player.sx = 3
-                frame = 0
-            }
-            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
-                player.sx = 1
-                frame = 0
-                animacao_vertical = 0
-            }
+            magia.x = player.x + 30
         }
         if(andar_cima == true && player_parado == false && atacar == false){
             player.y -= velocidade;
             player.sy = 3;
-            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
-                player.sx = 2
-                frame = 0
-            }
-            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
-                player.sx = 1
-                frame = 0
-                animacao_vertical = 1
-            }
-            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
-                player.sx = 3
-                frame = 0
-            }
-            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
-                player.sx = 1
-                frame = 0
-                animacao_vertical = 0
-            }
+            magia.y = player.y + 50
         }
         if(andar_baixo == true && player_parado == false && atacar == false){
             player.y += velocidade;
             player.sy = 0;
-            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 0){
-                player.sx = 2
-                frame = 0
-            }
-            if(frame >= if_frame && player.sx == 2 && animacao_vertical == 0){
-                player.sx = 1
-                frame = 0
-                animacao_vertical = 1
-            }
-            if(frame >= if_frame && player.sx == 1 && animacao_vertical == 1){
-                player.sx = 3
-                frame = 0
-            }
-            if(frame >= if_frame && player.sx == 3 && animacao_vertical == 1){
-                player.sx = 1
-                frame = 0
-                animacao_vertical = 0
-            }
+            magia.y = player.y + 50
         }
 
         //ENEMY
 
         enemy.desenha()
-        // if(player.x > enemy.x){
-        //     enemy.x += enemy_velocidade
-        //     enemy.sy = 1 
-        // }
-        // if(player.x < enemy.x){
-        //     enemy.x -= enemy_velocidade
-        //     enemy.sy = 0
-        // }
-        // if(player.y > enemy.y){
-        //     enemy.y += enemy_velocidade
-        // }
-        // if(player.y < enemy.y){
-        //     enemy.y -= enemy_velocidade
-        // }
         enemy_frame += 1
+        if(enemy.sx !== 3){
+            if(player.x > enemy.x && enemy_parado == false){
+                enemy.x += enemy_velocidade
+                enemy.sy = 1 
+            }
+            if(player.x < enemy.x && enemy_parado == false){
+                enemy.x -= enemy_velocidade
+                enemy.sy = 0
+            }
+            if(player.y > enemy.y && enemy_parado == false){
+                enemy.y += enemy_velocidade
+            }
+            if(player.y < enemy.y && enemy_parado == false){
+                enemy.y -= enemy_velocidade
+            }
+        }
         if(enemy_if_frame <= enemy_frame && enemy.sx == 1){
             enemy.sx = 2
             enemy_frame = 0
         }
-        if(enemy_if_frame <= enemy_frame && enemy.sx == 2){
+        if(enemy_if_frame <= enemy_frame && enemy.sx == 2 || enemy.sx == 3){
             enemy.sx = 1
             enemy_frame = 0
         }
@@ -443,30 +396,35 @@ function animacao(){
             empurrado = true
             invencibilidade = true
             vida_player -= 1
-        }
-        if(empurrado == true){
             andar_cima = false
             andar_baixo = false
             andar_direita = false
             andar_esquerda = false
+            atacar = false
+        }
+        if(empurrado == true){
             player.sx = 1
             player.sy = 4
         }
         if(direcao_empurro == 0 && empurrado == true){
-             tempo_empurro += 1
+            tempo_empurro += 1
             player.x += 10
+            magia.x += 10
         }
         if(direcao_empurro == 1 && empurrado == true){
             tempo_empurro += 1
             player.x -= 10
+            magia.x -= 10
         }
         if(direcao_empurro == 2 && empurrado == true){
             tempo_empurro += 1
             player.y += 10
+            magia.y += 10
         }
         if(direcao_empurro == 3 && empurrado == true){
             tempo_empurro += 1
             player.y -= 10
+            magia.y -= 10
         }
         if(tempo_empurro >= 10){
             empurrado = false
@@ -478,10 +436,10 @@ function animacao(){
             andar_baixo = false
             andar_direita = false
             andar_esquerda = false
-            tempo_empurro += 1
-            if(tempo_empurro >= 10){
+            tempo_parado += 1
+            if(tempo_parado >= 10){
                 player_parado = false
-                tempo_empurro = 0
+                tempo_parado = 0
             }
         }
         if(invencibilidade == true){
@@ -492,64 +450,64 @@ function animacao(){
                 tempo_invencibilidade = 0
                 player.sx = 1
             }
-            if(frame_dano >= if_frame /8 && player.sx !== 0){
+            if(frame_dano >= if_frame /8 && player.sx !== 0 && invencibilidade == true){
                 player.sx = 0
                 frame_dano = 0
             }
-            if(frame_dano >= if_frame /8 && player.sx == 0){
+            if(frame_dano >= if_frame /8 && player.sx == 0 && invencibilidade == true){
                 player.sx = 1
                 frame_dano = 0
             }
         }
 
         //ATAQUE DO PLAYER
-        magia.x = player.x
-        magia.y = player.y 
-        if(atacar == true && player_parado == false && empurrado == false && bullet == false){
+        if(atacar == true && player_parado == false && empurrado == false){
             player.sx = 4
             andar_cima = false
             andar_baixo = false
             andar_direita = false
             andar_esquerda = false
+            invencibilidade = false
             if(player.sy == 0){
-                andar_cima = false
-                andar_direita = false
-                andar_esquerda = false
                 magia.sx = 0
                 magia.sy = 0
                 magia.desenha()
-                bullet == true
-                magia.y += velocidade * 2.5
+                magia.y += 4
             }
             if(player.sy == 1){
-                andar_baixo = false
-                andar_cima = false
-                andar_esquerda = false
                 magia.sx = 0
                 magia.sy = 1
                 magia.desenha()
-                bullet == true
-                magia.x -= velocidade * 2.5
+                magia.x -= 4
             }
             if(player.sy == 2){
-                andar_baixo = false
-                andar_cima = false
-                andar_direita = false
                 magia.sx = 1
                 magia.sy = 1
                 magia.desenha()
-                bullet == true
-                magia.x += velocidade * 2.5
+                magia.x += 4
             }
             if(player.sy == 3){
-                andar_cima = false
-                andar_direita = false
-                andar_esquerda = false
                 magia.sx = 1
                 magia.sy = 0
                 magia.desenha()
-                bullet == true
-                magia.y -= velocidade * 2.5
+                magia.y -= 4
+            }
+        }
+
+        //COLLISÃO ENTRE ATAQUE E INIMIGO
+        if(magia.y <= enemy.y + 100 && magia.y + 40 >= enemy.y + 20 && magia.x <= enemy.x - 20 + 100 && magia.x + 40 >= enemy.x + 20  && enemy_parado == false && atacar == true){
+            enemy_parado = true
+            atacar = false
+            player.sx = 1
+            magia.x = player.x + 30
+            magia.y = player.y + 50
+        }
+        if(enemy_parado == true){
+            enemy.sx = 3
+            tempo_enemy_parado += 1
+            if(tempo_enemy_parado >= 60){
+                enemy_parado = false
+                tempo_enemy_parado = 0
             }
         }
 
@@ -566,7 +524,27 @@ function animacao(){
         if(player.y >= 700){
             player.y = 700
         }
-
+        if(magia.x <= 0){
+            magia.x = 0
+            atacar = false
+            player.sx = 1
+        }
+        if(magia.x >= 760){
+            magia.x = 760
+            atacar = false
+            player.sx = 1
+        }
+        if(magia.y <= 0){
+            magia.y = 0
+            atacar = false
+            player.sx = 1
+        }
+        if(magia.y >= 761){
+            magia.y = 761
+            atacar = false
+            player.sx = 1
+        }
+        
         //STATUS DO JOGADOR
         player_status.desenha()
         if(vida_player < vida_antiga){
