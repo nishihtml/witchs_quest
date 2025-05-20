@@ -105,35 +105,30 @@ let background = {
   }
 };
 
-class enemy {
-  constructor(enemy_sx, enemy_sy, enemy_x, enemy_y, enemy_image) {
-    this.sx = enemy_sx;
-    this.sy = enemy_sy;
-    this.x = enemy_x;
-    this.y = enemy_y;
-    this.size = 100;
-    this.img = new Image();
-    this.desenha = function() {
-      this.img.src = enemy_image;
-      ctx.beginPath();
-      ctx.drawImage(
-        this.img,
-        this.size * this.sx,
-        this.size * this.sy,
-        this.size,
-        this.size,
-        this.x,
-        this.y,
-        this.size,
-        this.size
-      );
-      ctx.closePath();
-    }
+let enemy_1 = {
+  sx: 1,
+  sy: 0,
+  x: -100,
+  y: -100,
+  size: 100,
+  img: new Image(),
+  desenha: function() {
+    this.img.src = "../dataset/enemy_1_sprite.png";
+    ctx.beginPath();
+    ctx.drawImage(
+      this.img,
+      this.size * this.sx,
+      this.size * this.sy,
+      this.size,
+      this.size,
+      this.x,
+      this.y,
+      this.size,
+      this.size
+    );
+    ctx.closePath();
   }
-}
-
-let enemy_1 = new enemy(1, 0, -100, -100, "../dataset/enemy_1_sprite.png");
-let enemy_2 = new enemy(1, 0, -100, -100, "../dataset/enemy_2_sprite.png");
+};
 
 let magia = {
   sx: 0,
@@ -233,14 +228,6 @@ let enemy_1_vida = 3;
 let enemy_1_invencibilidade = false;
 let enemy_1_parado = false;
 let tempo_enemy_1_parado = 0;
-
-let is_enemy_2 = false;
-let enemy_2_timer = 0;
-let enemy_2_spawn = Math.floor(Math.random() * 2000) + 2000;
-let enemy_2_vida = 3;
-let enemy_2_invencibilidade = false;
-let enemy_2_parado = false;
-let tempo_enemy_2_parado = 0;
 
 let enemy_frame = 0;
 let enemy_if_frame = 48;

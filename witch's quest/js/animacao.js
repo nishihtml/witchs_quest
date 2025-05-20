@@ -185,7 +185,7 @@ function animacao() {
             }
         }
 
-        // Colisão player e enemy 1
+        // Colisão player e enemy 2
         if (player.y + 20 <= enemy_2.y + 100 && player.y + 100 >= enemy_2.y + 20 &&
             player.x + 20 <= enemy_2.x - 20 + 100 && player.x - 20 + 100 >= enemy_2.x + 20 &&
             !invencibilidade) {
@@ -240,7 +240,7 @@ function animacao() {
         }
 
         // Ataque player
-        if (atacar && !player_parado && !empurrado && !enemy_1_invencibilidade && !enemy_2_invencibilidade) {
+        if (atacar && !player_parado && !empurrado && !enemy_1_invencibilidade && !enemy_2_invencibilidade && !enemy_1_parado & !enemy_2_parado) {
             player.sx = 4;
             andar_cima = andar_baixo = andar_direita = andar_esquerda = false;
             invencibilidade = false;

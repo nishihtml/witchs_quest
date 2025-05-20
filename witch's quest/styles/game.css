@@ -34,4 +34,8 @@ html{
 .nav-links li a:hover {
     color: #c084fc;
 }
-
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #c084fc;
+}
