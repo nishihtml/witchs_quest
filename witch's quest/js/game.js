@@ -204,11 +204,10 @@ let gameover = {
     ctx.closePath();
   }
 };
-
+//PLAYER
 let velocidade = 2;
 let frame = 0;
 let if_frame = 24;
-
 let andar_direita = false;
 let andar_esquerda = false;
 let andar_cima = false;
@@ -216,11 +215,11 @@ let andar_baixo = false;
 let player_vida = 3;
 let correr = false;
 let animacao_vertical = 0;
-
 let vida_player = 3;
 let vida_antiga = 3;
 let tempo_status = 0;
 
+//ENEMY
 let is_enemy_1 = false;
 let enemy_1_timer = 0;
 let enemy_1_spawn = Math.floor(Math.random() * 1000) + 500;
@@ -235,6 +234,7 @@ let variacao_velocidade = Math.floor(Math.random(0.1) * 2) + 0.5;
 let enemy_frame_inv = 0;
 let enemy_tempo_inv = 0;
 
+//COLLISÃO
 let direcao_empurro = 0;
 let empurrado = false;
 let tempo_empurro = 0;
@@ -244,11 +244,14 @@ let player_parado = false;
 let tempo_parado = 0;
 let frame_dano = 1;
 
+//ATAQUE
 let atacar = false;
 
+//FIM DE JOGO
 let player_caido = false;
 let tempo_caido = 0;
 
+//PONTUAÇÃO
 let pontos = 0;
 let tempo_pontos = 0
 
