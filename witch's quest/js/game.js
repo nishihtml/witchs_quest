@@ -88,8 +88,8 @@ let magia = {
 let player_status = {
     sx: 0,
     sy: 0,
-    x: 0,
-    y: 0,
+    x: 10,
+    y: 10,
     size: 100,
     img: new Image(),
     desenha: function(){
@@ -385,27 +385,27 @@ function animacao(){
         if(is_enemy_1 == true){
             enemy_1.desenha()
             enemy_frame += 1
-            if(enemy_1.sx !== 3){
-                if(player.x > enemy_1.x && (enemy_1_parado == false || enemy_1_invencibilidade == false)){
+            if(enemy_1.sx !== 3 && enemy_1_invencibilidade == false){
+                if(player.x > enemy_1.x && (enemy_1_parado == false )){
                     enemy_1.x += enemy_velocidade
                     enemy_1.sy = 1 
                 }
-                if(player.x < enemy_1.x && (enemy_1_parado == false || enemy_1_invencibilidade == false)){
+                if(player.x < enemy_1.x && (enemy_1_parado == false )){
                     enemy_1.x -= enemy_velocidade
                     enemy_1.sy = 0
                 }
-                if(player.y > enemy_1.y && (enemy_1_parado == false || enemy_1_invencibilidade == false)){
+                if(player.y > enemy_1.y && (enemy_1_parado == false )){
                     enemy_1.y += enemy_velocidade
                 }
-                if(player.y < enemy_1.y && (enemy_1_parado == false || enemy_1_invencibilidade == false)){
+                if(player.y < enemy_1.y && (enemy_1_parado == false )){
                     enemy_1.y -= enemy_velocidade
                 }
             }
-            if(enemy_if_frame <= enemy_frame && enemy_1.sx == 1){
+            if(enemy_if_frame <= enemy_frame && enemy_1.sx == 1  && enemy_1_invencibilidade == false){
                 enemy_1.sx = 2
                 enemy_frame = 0
             }
-            if(enemy_if_frame <= enemy_frame && enemy_1.sx == 2 || enemy_1.sx == 3){
+            if(enemy_if_frame <= enemy_frame && (enemy_1.sx == 2 || enemy_1.sx == 3) && enemy_1_invencibilidade == false){
                 enemy_1.sx = 1
                 enemy_frame = 0
             }
@@ -529,15 +529,14 @@ function animacao(){
             tempo_enemy_1_parado += 1
             if(tempo_enemy_1_parado >= 60){
                 tempo_enemy_1_parado = 0
-                enemy_1_vida -= 1
-                // if(enemy_1_vida <= 0){
-                //     is_enemy_1 = false
-                //     enemy_1.x = -100
-                //     enemy_1.y = -100
-                //     enemy_1_vida = 3
-                //     enemy_1_timer = 0
-                //     enemy_1_spawn = Math.floor(Math.random() * 500)
-                // }
+                if(enemy_1_vida <= 0){
+                    is_enemy_1 = false
+                    enemy_1.x = -100
+                    enemy_1.y = -100
+                    enemy_1_vida = 3
+                    enemy_1_timer = 0
+                    enemy_1_spawn = Math.floor(Math.random() * 500)
+                }
             }
         }
         if(enemy_1_invencibilidade == true){
@@ -548,6 +547,7 @@ function animacao(){
                 enemy_tempo_inv = 0
                 enemy_1.sx = 1
                 enemy_1_parado = false
+                enemy_1_vida -= 1
             }
             if(enemy_frame_inv >= enemy_if_frame /6 && enemy_1.sx !== 0 && enemy_1_invencibilidade == true){
                 enemy_1.sx = 0
