@@ -242,6 +242,7 @@ function animacao() {
                 enemy_1_parado = false;
                 enemy_1_vida--;
                 if (enemy_1_vida <= 0) {
+                    variacao_velocidade = Math.floor(Math.random() * 2) + 0.5;
                     is_enemy_1 = false;
                     enemy_1.x = -100; enemy_1.y = -100;
                     enemy_1_vida = 3;
