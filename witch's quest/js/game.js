@@ -50,20 +50,25 @@ let player = {
     }
 }
 
-let enemy = {
-    sx: 1,
-    sy: 0,
-    x: 0,
-    y: 0,
-    size: 100,
-    img: new Image(),
-    desenha: function(){
-        this.img.src = "../dataset/enemy_sprite.png";
-        ctx.beginPath();
-        ctx.drawImage(this.img, this.size * this.sx, this.size * this.sy, this.size, this.size, this.x, this.y, this.size, this.size);
-        ctx.closePath();
+class enemy{
+    constructor(enemy_sx, enemy_sy, enemy_x, enemy_y, enemy_image){
+        this.sx = enemy_sx,
+        this.sy = enemy_sy,
+        this.x = enemy_x,
+        this.y = enemy_y,
+        this.size = 100,
+        this.img = new Image(),
+        this.desenha = function(){
+            this.img.src = enemy_image;
+            ctx.beginPath();
+            ctx.drawImage(this.img, this.size * this.sx, this.size * this.sy, this.size, this.size, this.x, this.y, this.size, this.size);
+            ctx.closePath();
+        }
     }
 }
+
+let enemy_1 = new enemy(1, 0, 0, 100, "../dataset/enemy_1_sprite.png")
+
 
 let magia = {
     sx: 0,
@@ -362,36 +367,36 @@ function animacao(){
 
         //ENEMY
 
-        enemy.desenha()
+        enemy_1.desenha()
         enemy_frame += 1
-        if(enemy.sx !== 3){
-            if(player.x > enemy.x && enemy_parado == false){
-                enemy.x += enemy_velocidade
-                enemy.sy = 1 
+        if(enemy_1.sx !== 3){
+            if(player.x > enemy_1.x && enemy_parado == false){
+                enemy_1.x += enemy_velocidade
+                enemy_1.sy = 1 
             }
-            if(player.x < enemy.x && enemy_parado == false){
-                enemy.x -= enemy_velocidade
-                enemy.sy = 0
+            if(player.x < enemy_1.x && enemy_parado == false){
+                enemy_1.x -= enemy_velocidade
+                enemy_1.sy = 0
             }
-            if(player.y > enemy.y && enemy_parado == false){
-                enemy.y += enemy_velocidade
+            if(player.y > enemy_1.y && enemy_parado == false){
+                enemy_1.y += enemy_velocidade
             }
-            if(player.y < enemy.y && enemy_parado == false){
-                enemy.y -= enemy_velocidade
+            if(player.y < enemy_1.y && enemy_parado == false){
+                enemy_1.y -= enemy_velocidade
             }
         }
-        if(enemy_if_frame <= enemy_frame && enemy.sx == 1){
-            enemy.sx = 2
+        if(enemy_if_frame <= enemy_frame && enemy_1.sx == 1){
+            enemy_1.sx = 2
             enemy_frame = 0
         }
-        if(enemy_if_frame <= enemy_frame && enemy.sx == 2 || enemy.sx == 3){
-            enemy.sx = 1
+        if(enemy_if_frame <= enemy_frame && enemy_1.sx == 2 || enemy_1.sx == 3){
+            enemy_1.sx = 1
             enemy_frame = 0
         }
 
         //COLLISÃO ENTRE PLAYER E ENEMY
         //PLAYER CIMA X ENEMY BAIXO          PLAYER BAIXO X ENEMY CIMA         PLAYER ESQUERDA X ENEMY DIREITA        PALYER DIREITA X ENEMY ESQUERDA
-        if(player.y + 20 <= enemy.y + 100 && player.y + 100 >= enemy.y + 20 && player.x + 20 <= enemy.x - 20 + 100 && player.x - 20 + 100 >= enemy.x + 20 && invencibilidade == false){
+        if(player.y + 20 <= enemy_1.y + 100 && player.y + 100 >= enemy_1.y + 20 && player.x + 20 <= enemy_1.x - 20 + 100 && player.x - 20 + 100 >= enemy_1.x + 20 && invencibilidade == false){
             direcao_empurro = Math.floor(Math.random() * 3);
             empurrado = true
             invencibilidade = true
@@ -495,7 +500,7 @@ function animacao(){
         }
 
         //COLLISÃO ENTRE ATAQUE E INIMIGO
-        if(magia.y <= enemy.y + 100 && magia.y + 40 >= enemy.y + 20 && magia.x <= enemy.x - 20 + 100 && magia.x + 40 >= enemy.x + 20  && enemy_parado == false && atacar == true){
+        if(magia.y <= enemy_1.y + 100 && magia.y + 40 >= enemy_1.y + 20 && magia.x <= enemy_1.x - 20 + 100 && magia.x + 40 >= enemy_1.x + 20  && enemy_parado == false && atacar == true){
             enemy_parado = true
             atacar = false
             player.sx = 1
@@ -503,7 +508,7 @@ function animacao(){
             magia.y = player.y + 50
         }
         if(enemy_parado == true){
-            enemy.sx = 3
+            enemy_1.sx = 3
             tempo_enemy_parado += 1
             if(tempo_enemy_parado >= 60){
                 enemy_parado = false
