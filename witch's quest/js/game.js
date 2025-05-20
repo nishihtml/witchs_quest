@@ -108,6 +108,7 @@ class enemy {
 }
 
 let enemy_1 = new enemy(1, 0, 0, 100, "../dataset/enemy_1_sprite.png");
+let enemy_2 = new enemy(1, 0, 0, 100, "../dataset/enemy_2_sprite.png");
 
 let magia = {
   sx: 0,
@@ -207,6 +208,14 @@ let enemy_1_vida = 3;
 let enemy_1_invencibilidade = false;
 let enemy_1_parado = false;
 let tempo_enemy_1_parado = 0;
+
+let is_enemy_2 = false;
+let enemy_2_timer = 0;
+let enemy_2_spawn = Math.floor(Math.random() * 500);
+let enemy_2_vida = 3;
+let enemy_2_invencibilidade = false;
+let enemy_2_parado = false;
+let tempo_enemy_2_parado = 0;
 
 let enemy_frame = 0;
 let enemy_if_frame = 48;

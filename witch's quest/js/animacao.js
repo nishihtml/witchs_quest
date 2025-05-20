@@ -74,6 +74,8 @@ function animacao() {
             player_parado = false;
             player_caido = false;
             invencibilidade = false;
+            is_enemy_1 = false
+            is_enemy_2 = false
             pontuacao = 0; // Resetar pontuação ao reiniciar
         }));
     }
@@ -152,6 +154,44 @@ function animacao() {
             atacar = false;
         }
 
+        // Spawn enemy 2
+        if (!is_enemy_2) {
+            enemy_2_timer++;
+            if (enemy_2_timer >= enemy_2_spawn) {
+                enemy_2.x = Math.floor(Math.random() * 700);
+                enemy_2.y = Math.floor(Math.random() * 700);
+                is_enemy_2 = true;
+            }
+        }
+
+        // Movimento e animação enemy 2
+        if (is_enemy_2) {
+            enemy_2.desenha();
+            enemy_frame++;
+            if (enemy_2.sx !== 3 && !enemy_2_invencibilidade && !enemy_2_parado) {
+                if (player.x > enemy_2.x) { enemy_2.x += enemy_velocidade; enemy_2.sy = 1; }
+                if (player.x < enemy_2.x) { enemy_2.x -= enemy_velocidade; enemy_2.sy = 0; }
+                if (player.y > enemy_2.y) enemy_2.y += enemy_velocidade;
+                if (player.y < enemy_2.y) enemy_2.y -= enemy_velocidade;
+            }
+            if (enemy_if_frame <= enemy_frame && !enemy_2_invencibilidade) {
+                enemy_2.sx = (enemy_2.sx == 1) ? 2 : 1;
+                enemy_frame = 0;
+            }
+        }
+
+        // Colisão player e enemy 1
+        if (player.y + 20 <= enemy_2.y + 100 && player.y + 100 >= enemy_2.y + 20 &&
+            player.x + 20 <= enemy_2.x - 20 + 100 && player.x - 20 + 100 >= enemy_2.x + 20 &&
+            !invencibilidade) {
+            direcao_empurro = Math.floor(Math.random() * 4);
+            empurrado = true;
+            invencibilidade = true;
+            vida_player--;
+            andar_cima = andar_baixo = andar_direita = andar_esquerda = false;
+            atacar = false;
+        }
+
         // Empurro do player
         if (empurrado) {
             player.sx = 1;
@@ -219,7 +259,7 @@ function animacao() {
             pontuacao += 10;
         }
 
-        // Controle enemy parado
+        // Controle enemy 1 parado
         if (enemy_1_parado) {
             enemy_1_invencibilidade = true;
             tempo_enemy_1_parado++;
@@ -248,6 +288,53 @@ function animacao() {
             }
             if (enemy_frame_inv >= enemy_if_frame / 6) {
                 enemy_1.sx = (enemy_1.sx !== 0) ? 0 : 3;
+                enemy_frame_inv = 0;
+            }
+        }
+
+        // Colisão magia e enemy 2
+        if (magia.y <= enemy_2.y + 100 && magia.y + 40 >= enemy_2.y + 20 &&
+            magia.x <= enemy_2.x - 20 + 100 && magia.x + 40 >= enemy_2.x + 20 &&
+            !enemy_2_parado && atacar) {
+            enemy_2_parado = true;
+            atacar = false;
+            player.sx = 1;
+            magia.x = player.x + 30;
+            magia.y = player.y + 50;
+
+            // Incrementa pontuação ao acertar o inimigo
+            pontuacao += 10;
+        }
+
+        // Controle enemy 2 parado
+        if (enemy_2_parado) {
+            enemy_2_invencibilidade = true;
+            tempo_enemy_2_parado++;
+            if (tempo_enemy_2_parado >= 60) {
+                tempo_enemy_2_parado = 0;
+                if (enemy_2_vida <= 0) {
+                    is_enemy_2 = false;
+                    enemy_2.x = -100; enemy_2.y = -100;
+                    enemy_2_vida = 3;
+                    enemy_2_timer = 0;
+                    enemy_2_spawn = Math.floor(Math.random() * 500);
+                }
+            }
+        }
+
+        // Invencibilidade enemy 2
+        if (enemy_2_invencibilidade) {
+            enemy_tempo_inv++;
+            enemy_frame_inv++;
+            if (enemy_tempo_inv >= 300) {
+                enemy_2_invencibilidade = false;
+                enemy_tempo_inv = 0;
+                enemy_2.sx = 1;
+                enemy_2_parado = false;
+                enemy_2_vida--;
+            }
+            if (enemy_frame_inv >= enemy_if_frame / 6) {
+                enemy_2.sx = (enemy_2.sx !== 0) ? 0 : 3;
                 enemy_frame_inv = 0;
             }
         }
