@@ -130,6 +130,10 @@ let vida_player = 3
 let vida_antiga = 3
 let tempo_status = 0
 
+let is_enemy_1 = false
+let enemy_1_timer = 0
+let enemy_1_spawn = Math.floor(Math.random() * 500)
+
 let enemy_frame = 0
 let enemy_if_frame = 48
 let enemy_velocidade = 1
@@ -365,33 +369,43 @@ function animacao(){
             magia.y = player.y + 50
         }
 
-        //ENEMY
+        //ENEMIES
 
-        enemy_1.desenha()
-        enemy_frame += 1
-        if(enemy_1.sx !== 3){
-            if(player.x > enemy_1.x && enemy_parado == false){
-                enemy_1.x += enemy_velocidade
-                enemy_1.sy = 1 
-            }
-            if(player.x < enemy_1.x && enemy_parado == false){
-                enemy_1.x -= enemy_velocidade
-                enemy_1.sy = 0
-            }
-            if(player.y > enemy_1.y && enemy_parado == false){
-                enemy_1.y += enemy_velocidade
-            }
-            if(player.y < enemy_1.y && enemy_parado == false){
-                enemy_1.y -= enemy_velocidade
+        if(is_enemy_1 == false){
+            enemy_1_timer += 1
+            if (enemy_1_timer >= enemy_1_spawn){
+                enemy_1.x = Math.floor(Math.random() * 700);
+                enemy_1.y = Math.floor(Math.random() * 700);
+                is_enemy_1 = true
             }
         }
-        if(enemy_if_frame <= enemy_frame && enemy_1.sx == 1){
-            enemy_1.sx = 2
-            enemy_frame = 0
-        }
-        if(enemy_if_frame <= enemy_frame && enemy_1.sx == 2 || enemy_1.sx == 3){
-            enemy_1.sx = 1
-            enemy_frame = 0
+        if(is_enemy_1 == true){
+            enemy_1.desenha()
+            enemy_frame += 1
+            if(enemy_1.sx !== 3){
+                if(player.x > enemy_1.x && enemy_parado == false){
+                    enemy_1.x += enemy_velocidade
+                    enemy_1.sy = 1 
+                }
+                if(player.x < enemy_1.x && enemy_parado == false){
+                    enemy_1.x -= enemy_velocidade
+                    enemy_1.sy = 0
+                }
+                if(player.y > enemy_1.y && enemy_parado == false){
+                    enemy_1.y += enemy_velocidade
+                }
+                if(player.y < enemy_1.y && enemy_parado == false){
+                    enemy_1.y -= enemy_velocidade
+                }
+            }
+            if(enemy_if_frame <= enemy_frame && enemy_1.sx == 1){
+                enemy_1.sx = 2
+                enemy_frame = 0
+            }
+            if(enemy_if_frame <= enemy_frame && enemy_1.sx == 2 || enemy_1.sx == 3){
+                enemy_1.sx = 1
+                enemy_frame = 0
+            }
         }
 
         //COLLISÃO ENTRE PLAYER E ENEMY
@@ -508,7 +522,7 @@ function animacao(){
             magia.y = player.y + 50
         }
         if(enemy_parado == true){
-            enemy_1.sx = 3
+            enemy.sx = 3
             tempo_enemy_parado += 1
             if(tempo_enemy_parado >= 60){
                 enemy_parado = false
