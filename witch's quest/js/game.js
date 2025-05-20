@@ -232,6 +232,7 @@ let tempo_enemy_1_parado = 0;
 let enemy_frame = 0;
 let enemy_if_frame = 48;
 let enemy_velocidade = 1;
+let variacao_velocidade = Math.floor(Math.random() * 2) + 0.5;
 
 let enemy_frame_inv = 0;
 let enemy_tempo_inv = 0;

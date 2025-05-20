@@ -9,8 +9,6 @@ let pontuacao = 0; // Variável de pontuação (HUD)
 const musicaFundo = new Audio('../dataset/game.mp3');
 musicaFundo.loop = true;
 musicaFundo.volume = 0.3; // volume baixo para não incomodar
-const atacado = new Audio('../dataset/atacado.wav');
-atacado.volume = 0.3;
 
 // Função para desenhar HUD de vida (canto superior direito)
 function desenhaHUDVida() {
@@ -134,10 +132,10 @@ function animacao() {
             enemy_1.desenha();
             enemy_frame++;
             if (enemy_1.sx !== 3 && !enemy_1_invencibilidade && !enemy_1_parado) {
-                if (player.x > enemy_1.x) { enemy_1.x += enemy_velocidade; enemy_1.sy = 1; }
-                if (player.x < enemy_1.x) { enemy_1.x -= enemy_velocidade; enemy_1.sy = 0; }
-                if (player.y > enemy_1.y) enemy_1.y += enemy_velocidade;
-                if (player.y < enemy_1.y) enemy_1.y -= enemy_velocidade;
+                if (player.x > enemy_1.x) { enemy_1.x += enemy_velocidade * variacao_velocidade; enemy_1.sy = 1; }
+                if (player.x < enemy_1.x) { enemy_1.x -= enemy_velocidade * variacao_velocidade; enemy_1.sy = 0; }
+                if (player.y > enemy_1.y) enemy_1.y += enemy_velocidade * variacao_velocidade;
+                if (player.y < enemy_1.y) enemy_1.y -= enemy_velocidade * variacao_velocidade;
             }
             if (enemy_if_frame <= enemy_frame && !enemy_1_invencibilidade) {
                 enemy_1.sx = (enemy_1.sx == 1) ? 2 : 1;
