@@ -133,11 +133,17 @@ let tempo_status = 0
 let is_enemy_1 = false
 let enemy_1_timer = 0
 let enemy_1_spawn = Math.floor(Math.random() * 500)
+let enemy_1_vida = 3
+let enemy_1_invencibilidade = false
+let enemy_1_parado = false
+let tempo_enemy_1_parado = 0
 
 let enemy_frame = 0
 let enemy_if_frame = 48
 let enemy_velocidade = 1
-let enemy_vida = 2
+
+let enemy_frame_inv = 0
+let enemy_tempo_inv = 0
 
 let direcao_empurro = 0
 let empurrado = false
@@ -149,9 +155,6 @@ let tempo_parado = 0
 let frame_dano = 1
 
 let atacar = false
-
-let enemy_parado = false
-let tempo_enemy_parado = 0
 
 let player_caido = false
 let tempo_caido = 0
@@ -383,18 +386,18 @@ function animacao(){
             enemy_1.desenha()
             enemy_frame += 1
             if(enemy_1.sx !== 3){
-                if(player.x > enemy_1.x && enemy_parado == false){
+                if(player.x > enemy_1.x && (enemy_1_parado == false || enemy_1_invencibilidade == false)){
                     enemy_1.x += enemy_velocidade
                     enemy_1.sy = 1 
                 }
-                if(player.x < enemy_1.x && enemy_parado == false){
+                if(player.x < enemy_1.x && (enemy_1_parado == false || enemy_1_invencibilidade == false)){
                     enemy_1.x -= enemy_velocidade
                     enemy_1.sy = 0
                 }
-                if(player.y > enemy_1.y && enemy_parado == false){
+                if(player.y > enemy_1.y && (enemy_1_parado == false || enemy_1_invencibilidade == false)){
                     enemy_1.y += enemy_velocidade
                 }
-                if(player.y < enemy_1.y && enemy_parado == false){
+                if(player.y < enemy_1.y && (enemy_1_parado == false || enemy_1_invencibilidade == false)){
                     enemy_1.y -= enemy_velocidade
                 }
             }
@@ -514,19 +517,45 @@ function animacao(){
         }
 
         //COLLISÃO ENTRE ATAQUE E INIMIGO
-        if(magia.y <= enemy_1.y + 100 && magia.y + 40 >= enemy_1.y + 20 && magia.x <= enemy_1.x - 20 + 100 && magia.x + 40 >= enemy_1.x + 20  && enemy_parado == false && atacar == true){
-            enemy_parado = true
+        if(magia.y <= enemy_1.y + 100 && magia.y + 40 >= enemy_1.y + 20 && magia.x <= enemy_1.x - 20 + 100 && magia.x + 40 >= enemy_1.x + 20  && enemy_1_parado == false && atacar == true){
+            enemy_1_parado = true
             atacar = false
             player.sx = 1
             magia.x = player.x + 30
             magia.y = player.y + 50
         }
-        if(enemy_parado == true){
-            enemy.sx = 3
-            tempo_enemy_parado += 1
-            if(tempo_enemy_parado >= 60){
-                enemy_parado = false
-                tempo_enemy_parado = 0
+        if(enemy_1_parado == true){
+            enemy_1_invencibilidade = true
+            tempo_enemy_1_parado += 1
+            if(tempo_enemy_1_parado >= 60){
+                tempo_enemy_1_parado = 0
+                enemy_1_vida -= 1
+                // if(enemy_1_vida <= 0){
+                //     is_enemy_1 = false
+                //     enemy_1.x = -100
+                //     enemy_1.y = -100
+                //     enemy_1_vida = 3
+                //     enemy_1_timer = 0
+                //     enemy_1_spawn = Math.floor(Math.random() * 500)
+                // }
+            }
+        }
+        if(enemy_1_invencibilidade == true){
+            enemy_tempo_inv += 1
+            enemy_frame_inv += 1
+            if(enemy_tempo_inv >= 300){
+                enemy_1_invencibilidade = false
+                enemy_tempo_inv = 0
+                enemy_1.sx = 1
+                enemy_1_parado = false
+            }
+            if(enemy_frame_inv >= enemy_if_frame /6 && enemy_1.sx !== 0 && enemy_1_invencibilidade == true){
+                enemy_1.sx = 0
+                enemy_frame_inv = 0
+            }
+            if(enemy_frame_inv >= enemy_if_frame /6 && enemy_1.sx == 0 && enemy_1_invencibilidade == true){
+                enemy_1.sx = 3
+                enemy_frame_inv = 0
             }
         }
 
