@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(82, 65, 83);
+    background-color: rgb(17, 10, 22);
 }
 
 canvas{
@@ -13,3 +13,25 @@ html{
     align-items: center;
     text-align: center;
 }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5em;
+}
+.nav-links li a {
+    color: #f1f1f1;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+.nav-links li a:hover {
+    color: #c084fc;
+}
+

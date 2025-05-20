@@ -6,9 +6,11 @@ const vida_icon_margin = 10;
 let pontuacao = 0; // Variável de pontuação (HUD)
 
 // Criar um áudio para música de fundo
-const musicaFundo = new Audio('LINK');
+const musicaFundo = new Audio('../dataset/game.mp3');
 musicaFundo.loop = true;
 musicaFundo.volume = 0.3; // volume baixo para não incomodar
+const atacado = new Audio('../dataset/atacado.wav');
+atacado.volume = 0.3;
 
 // Função para desenhar HUD de vida (canto superior direito)
 function desenhaHUDVida() {
@@ -75,12 +77,15 @@ function animacao() {
             player_caido = false;
             invencibilidade = false;
             is_enemy_1 = false
+            enemy_1_timer = 0;
             is_enemy_2 = false
+            enemy_2_timer = 0;
             pontuacao = 0; // Resetar pontuação ao reiniciar
         }));
     }
 
     else if (jogo) {
+        background.desenha()
         // Fim de jogo (player caido)
         if (player_caido) {
             player.sx = 2; player.sy = 4;
@@ -121,7 +126,7 @@ function animacao() {
             enemy_1_timer++;
             if (enemy_1_timer >= enemy_1_spawn) {
                 enemy_1.x = Math.floor(Math.random() * 700);
-                enemy_1.y = Math.floor(Math.random() * 700);
+                enemy_1.y = Math.floor(Math.random() * 500) + 200;
                 is_enemy_1 = true;
             }
         }
@@ -169,10 +174,10 @@ function animacao() {
             enemy_2.desenha();
             enemy_frame++;
             if (enemy_2.sx !== 3 && !enemy_2_invencibilidade && !enemy_2_parado) {
-                if (player.x > enemy_2.x) { enemy_2.x += enemy_velocidade; enemy_2.sy = 1; }
-                if (player.x < enemy_2.x) { enemy_2.x -= enemy_velocidade; enemy_2.sy = 0; }
-                if (player.y > enemy_2.y) enemy_2.y += enemy_velocidade;
-                if (player.y < enemy_2.y) enemy_2.y -= enemy_velocidade;
+                if (player.x > enemy_2.x) { enemy_2.x += enemy_velocidade * 0.75; enemy_2.sy = 1; }
+                if (player.x < enemy_2.x) { enemy_2.x -= enemy_velocidade * 0.75; enemy_2.sy = 0; }
+                if (player.y > enemy_2.y) enemy_2.y += enemy_velocidade * 0.75;
+                if (player.y < enemy_2.y) enemy_2.y -= enemy_velocidade * 0.75;
             }
             if (enemy_if_frame <= enemy_frame && !enemy_2_invencibilidade) {
                 enemy_2.sx = (enemy_2.sx == 1) ? 2 : 1;
@@ -235,7 +240,7 @@ function animacao() {
         }
 
         // Ataque player
-        if (atacar && !player_parado && !empurrado) {
+        if (atacar && !player_parado && !empurrado && !enemy_1_invencibilidade && !enemy_2_invencibilidade) {
             player.sx = 4;
             andar_cima = andar_baixo = andar_direita = andar_esquerda = false;
             invencibilidade = false;
@@ -265,18 +270,11 @@ function animacao() {
             tempo_enemy_1_parado++;
             if (tempo_enemy_1_parado >= 60) {
                 tempo_enemy_1_parado = 0;
-                if (enemy_1_vida <= 0) {
-                    is_enemy_1 = false;
-                    enemy_1.x = -100; enemy_1.y = -100;
-                    enemy_1_vida = 3;
-                    enemy_1_timer = 0;
-                    enemy_1_spawn = Math.floor(Math.random() * 500);
-                }
             }
         }
 
         // Invencibilidade enemy 1
-        if (enemy_1_invencibilidade) {
+        if (enemy_1_invencibilidade){
             enemy_tempo_inv++;
             enemy_frame_inv++;
             if (enemy_tempo_inv >= 300) {
@@ -285,6 +283,13 @@ function animacao() {
                 enemy_1.sx = 1;
                 enemy_1_parado = false;
                 enemy_1_vida--;
+                if (enemy_1_vida <= 0) {
+                    is_enemy_1 = false;
+                    enemy_1.x = -100; enemy_1.y = -100;
+                    enemy_1_vida = 3;
+                    enemy_1_timer = 0;
+                    enemy_1_spawn = Math.floor(Math.random() * 500);
+                }
             }
             if (enemy_frame_inv >= enemy_if_frame / 6) {
                 enemy_1.sx = (enemy_1.sx !== 0) ? 0 : 3;
@@ -312,13 +317,6 @@ function animacao() {
             tempo_enemy_2_parado++;
             if (tempo_enemy_2_parado >= 60) {
                 tempo_enemy_2_parado = 0;
-                if (enemy_2_vida <= 0) {
-                    is_enemy_2 = false;
-                    enemy_2.x = -100; enemy_2.y = -100;
-                    enemy_2_vida = 3;
-                    enemy_2_timer = 0;
-                    enemy_2_spawn = Math.floor(Math.random() * 500);
-                }
             }
         }
 
@@ -332,6 +330,13 @@ function animacao() {
                 enemy_2.sx = 1;
                 enemy_2_parado = false;
                 enemy_2_vida--;
+                if (enemy_2_vida <= 0) {
+                    is_enemy_2 = false;
+                    enemy_2.x = -100; enemy_2.y = -100;
+                    enemy_2_vida = 3;
+                    enemy_2_timer = 0;
+                    enemy_2_spawn = Math.floor(Math.random() * 2000) + 2000;
+                }
             }
             if (enemy_frame_inv >= enemy_if_frame / 6) {
                 enemy_2.sx = (enemy_2.sx !== 0) ? 0 : 3;
@@ -341,7 +346,7 @@ function animacao() {
 
         // Limites player e magia na tela
         player.x = Math.min(Math.max(player.x, 0), 700);
-        player.y = Math.min(Math.max(player.y, 0), 700);
+        player.y = Math.min(Math.max(player.y, 150), 700);
 
         if (magia.x <= 0 || magia.x >= 760 || magia.y <= 0 || magia.y >= 761) {
             magia.x = Math.min(Math.max(magia.x, 0), 760);
